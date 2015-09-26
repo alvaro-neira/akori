@@ -44,7 +44,7 @@ public class Configuration {
    *
    * Default value: true
    */
-  public static boolean startMaximized = Boolean.parseBoolean(System.getProperty("selenide.start-maximized", "true"));
+  public static boolean startMaximized = Boolean.parseBoolean(System.getProperty("selenide.start-maximized", "false"));
 
   /**
    * Does Selenide need to take screenshots on failing tests.

@@ -192,6 +192,7 @@ public class WebDriverThreadLocalContainer {
     DesiredCapabilities capabilities = DesiredCapabilities.htmlUnit();
     capabilities.setCapability(HtmlUnitDriver.INVALIDSELECTIONERROR, true);
     capabilities.setCapability(HtmlUnitDriver.INVALIDXPATHERROR, false);
+//    capabilities.setCapability("screen-resolution","1920x1080");
     capabilities.setJavascriptEnabled(false);
     if (browser.indexOf(':') > -1) {
       // Use constants BrowserType.IE, BrowserType.FIREFOX, BrowserType.CHROME etc.
@@ -222,9 +223,9 @@ public class WebDriverThreadLocalContainer {
       try {
         if (isChrome()) {
           maximizeChromeBrowser(driver.manage().window());
-        }
-        else {
-          driver.manage().window().maximize();
+        } else {
+          driver.manage().window().setSize(new Dimension(1920, 1080));
+//          driver.manage().window().maximize();
         }
       }
       catch (Exception cannotMaximize) {
@@ -238,9 +239,9 @@ public class WebDriverThreadLocalContainer {
     // Chrome driver does not yet support maximizing. Let' apply black magic!
     java.awt.Toolkit toolkit = java.awt.Toolkit.getDefaultToolkit();
 
-    Dimension screenResolution = new Dimension(
-        (int) toolkit.getScreenSize().getWidth(),
-        (int) toolkit.getScreenSize().getHeight());
+    Dimension screenResolution = new Dimension(1920,1080);
+//        (int) toolkit.getScreenSize().getWidth(),
+//        (int) toolkit.getScreenSize().getHeight());
 
     window.setSize(screenResolution);
     window.setPosition(new org.openqa.selenium.Point(0, 0));
@@ -253,16 +254,20 @@ public class WebDriverThreadLocalContainer {
       capabilities.setCapability(TAKES_SCREENSHOT, true);
       capabilities.setCapability(ACCEPT_SSL_CERTS, true);
       capabilities.setCapability(SUPPORTS_ALERTS, true);
+//      capabilities.setCapability("screen-resolution","1920x1080");
       capabilities.setJavascriptEnabled(false);
 
 
       Class<?> clazz = Class.forName(className);
+      WebDriver retVal;
       if (WebDriverProvider.class.isAssignableFrom(clazz)) {
-        return ((WebDriverProvider) clazz.newInstance()).createDriver(capabilities);
+        retVal = ((WebDriverProvider) clazz.newInstance()).createDriver(capabilities);
       } else {
         Constructor<?> constructor = Class.forName(className).getConstructor(Capabilities.class);
-        return (WebDriver) constructor.newInstance(capabilities);
+        retVal = (WebDriver) constructor.newInstance(capabilities);
       }
+      retVal.manage().window().setSize(new Dimension(1920, 1080));
+      return retVal;
     }
     catch (InvocationTargetException e) {
       throw runtime(e.getTargetException());

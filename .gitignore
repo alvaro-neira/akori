@@ -7,3 +7,11 @@
 # Idea files
 .idea
 
+# NetBeans files
+build/
+dist/
+build.xml
+lib/nblibraries.properties
+manifest.mf
+nbproject/
+
