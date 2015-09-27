@@ -15,3 +15,7 @@ lib/nblibraries.properties
 manifest.mf
 nbproject/
 
+# Eclipse files
+.classpath
+.project
+

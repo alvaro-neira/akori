@@ -250,7 +250,7 @@ public class WebDriverThreadLocalContainer {
   protected WebDriver createInstanceOf(String className) {
     try {
       DesiredCapabilities capabilities = new DesiredCapabilities();
-      capabilities.setJavascriptEnabled(true);
+//      capabilities.setJavascriptEnabled(true);
       capabilities.setCapability(TAKES_SCREENSHOT, true);
       capabilities.setCapability(ACCEPT_SSL_CERTS, true);
       capabilities.setCapability(SUPPORTS_ALERTS, true);
