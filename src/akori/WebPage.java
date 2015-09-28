@@ -1,7 +1,9 @@
 package akori;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import org.jsoup.Jsoup;
@@ -19,24 +21,24 @@ import com.codeborne.selenide.SelenideElement;
 import cl.akori.util.StringUtils;
 
 public class WebPage {
-	public static final String RESULTS_PATH = "../test2/";
+	public static final String RESULTS_PATH = "../results/";
 	public static final String WEBSITES_PATH = "../websites/";
 	public static final String PICTURES_PATH = "./build/reports/tests/";
     public static final Integer MAX_DEPTH = 100;
 
-	private static String uri;
-	private static SelenideElement baseElem;
-	private static Integer maxj;
-	private static ArrayList<String> coordinates;
+	private String uri;
+	private SelenideElement baseElem;
+	private Integer maxDepth;
+	private ArrayList<String> coordinates;
+	String name;
+	PrintWriter writer;
 	public WebPage(String uri) {
 		this.uri = uri;
+		this.name = StringUtils.namefile(uri);
 	}
 
 	public ArrayList<String> getCoordinates() {
 		coordinates = new ArrayList<>();
-
-		String NAME = StringUtils.namefile(uri);
-
 		By by = By.tagName("body");
 		baseElem = Selenide.$(by);
 
@@ -44,13 +46,21 @@ public class WebPage {
 		Elements e1 = doc.body().getAllElements();
 
 		ArrayList<String> tags = new ArrayList<>();
-		Selenide.screenshot(NAME);
+		Selenide.screenshot(name);
 
-		maxj = 0;
+		maxDepth = 0;
 		Integer numberElements = e1.size();
 		Integer numberSelenideElements = 0;
 		System.out.println("number of elements=" + numberElements);
 		Integer elementCounter = 0;
+        try {
+			writer = new PrintWriter(RESULTS_PATH + name+".csv", "UTF-8");
+		} catch (Exception e) {
+			System.err.println("Trying to write '"+RESULTS_PATH+name+".csv'");
+            e.printStackTrace();
+            System.exit(1);
+		} 
+        writer.println("node_name,x,y,width,height,depth,has_text,id,k");
 		for (Element elem : e1) {
 			elementCounter++;
 			System.out.println("Examining element '" + elem.nodeName() + "'");
@@ -75,10 +85,11 @@ public class WebPage {
 		}
 
 		System.out.println("out of loop");
+        writer.close();
 		return coordinates;
 	}
 
-	public static void processSelenideElement(SelenideElement elem, Element temp, Integer id) {
+	public void processSelenideElement(SelenideElement elem, Element temp, Integer id) {
 		WebElement temp1 = elem.toWebElement();
 		Point po = temp1.getLocation();
 		Dimension d = temp1.getSize();
@@ -87,7 +98,7 @@ public class WebPage {
 		}
 		int dep = 0;
 		int j = 1;
-		for (; !elem.equals(baseElem); ++j) {
+		for (; !elem.equals(baseElem); j++) {
 			elem = elem.parent();
 			if (j > MAX_DEPTH) {
 				break;
@@ -103,9 +114,10 @@ public class WebPage {
 					+ id + "," + (k + 1);
 		}
 		coordinates.add(str);
-		if (j > maxj) {
-			maxj = j;
+		if (j > maxDepth) {
+			maxDepth = j;
 		}
+        writer.println(str);
 	}
 
 	public static Document getJsoupDoc(String path, Boolean isOffline) {
@@ -128,5 +140,13 @@ public class WebPage {
 			System.exit(1);
 		}
 		return doc;
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public Integer getMaxDepth(){
+		return maxDepth;
 	}
 }

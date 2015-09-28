@@ -11,7 +11,11 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
@@ -29,7 +33,7 @@ import java.nio.file.Path;
  * @author Claudio
  */
 public class DrawLevel {
-    public static final String RESULTS_PATH = "../test2/";
+    public static final String RESULTS_PATH = "../results/";
     public static final String WEBSITES_PATH = "../websites/";
     public static final String PICTURES_PATH = "./build/reports/tests/";
     public static final String[] URLlist = {
@@ -63,186 +67,46 @@ public class DrawLevel {
 //          WEBSITES_PATH+"enfem/Diez%20alimentos%20que%20puedes%20comer%20antes%20de%20hacer%20ejercicio.htm" //84 minutes and didn't stop
 //          WEBSITES_PATH+"enfem/Recetas%20sin%20gluten%20-%20enfemenino.htm" //No results after 4 hours
     };
-    public static final Integer MAX_DEPTH = 100;
-    //public static final Integer MAX_DEPTH2 = 100;
-    static SelenideElement s;
-    static ArrayList<String> elements;
-    static Integer maxj;
-    static Integer numberElements;
-    public static void processSelenideElement(SelenideElement elem, Element temp, Integer id) {
-//        System.out.println("Examining selenide element '" + elem + "'");
-        WebElement temp1 = elem.toWebElement();
-        Point po = temp1.getLocation();
-        Dimension d = temp1.getSize();
-        if (d.width <= 0 || d.height <= 0 || po.x < 0 || po.y < 0) {
-            return;
-        }
-        int dep = 0;
-        int j = 1;
-        for (; !elem.equals(s); ++j) {
-            elem = elem.parent();
-            if (j > MAX_DEPTH) {
-                break;
-            }
-        }
-        Integer k=0;
-        String str="";
-        if (temp.hasText()) {
-            str = temp.nodeName() + "," + po.x + "," + po.y + "," + d.width + "," + d.height + "," + j + "," + 1 + "," + id + "," + (k + 1);
-        } else {
-            str = temp.nodeName() + "," + po.x + "," + po.y + "," + d.width + "," + d.height + "," + j + "," + 0 + "," + id + "," + (k + 1);
-        }
-        elements.add(str);
-        if (j > maxj) {
-            maxj = j;
-        }
-    }
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         System.out.println("esto es DrawLevel");
         for (int k = 0; k < URLlist.length; ++k) {
-            String URL = URLlist[k];
-            String NAME = namefile(URL);
+            WebPage webpage= new WebPage(URLlist[k]);
+            ArrayList<String>coordinates = webpage.getCoordinates();
+            try {
+            	BufferedReader reader = new BufferedReader(new FileReader(RESULTS_PATH+webpage.getName()+".csv"));
+                int[] conteo = new int[webpage.getMaxDepth()];
+                BufferedImage img = ImageIO.read(new File(PICTURES_PATH+webpage.getName() + ".png"));
+                Graphics2D graph = img.createGraphics();
+                graph.setColor(Color.RED);
+                ArrayList<String> elementsGraphed = new ArrayList<>();
+				String line=reader.readLine(); //header
+				line=reader.readLine();
+				while(line!=null){
+					String[] aux = line.split(",");
+	                conteo[Integer.parseInt(aux[5]) - 1]++;
+	                if (Integer.parseInt(aux[5]) < webpage.getMaxDepth() && conteo[Integer.parseInt(aux[5])-1] > conteo[Integer.parseInt(aux[5])]) {
+	                    int x = Integer.parseInt(aux[1]);
+	                    int y = Integer.parseInt(aux[2]);
+	                    int w = Integer.parseInt(aux[3]);
+	                    int h = Integer.parseInt(aux[4]);
 
-            By by = By.tagName("body");
-            s = Selenide.$(by);
-            
-            Document doc=getDoc(URL,true);
-            Elements e1 = doc.body().getAllElements();
+	                    graph.draw(new Rectangle(x, y, w, h));
+	                    elementsGraphed.add(line);
+	                }
+	                line=reader.readLine();
+				}
+	            graph.dispose();
+	            reader.close();
+	            //Here it generates the png file
+	            ImageIO.write(img, "png", new File(RESULTS_PATH + webpage.getName() + ".png"));
 
-            ArrayList<String> tags = new ArrayList<>();
-            Selenide.screenshot(NAME);
-
-            elements = new ArrayList<>();
-            maxj = 0;
-            numberElements = e1.size();
-            Integer numberSelenideElements=0;
-            System.out.println("number of elements="+numberElements);
-            Integer elementCounter = 0;
-            for (Element elem : e1) {
-                elementCounter++;
-                System.out.println("Examining element '"+elem.nodeName()+"'");
-                if (tags.indexOf(elem.tagName()) != -1) {
-                    System.out.println("Skipping "+elem.tagName());
-                    continue;
-                }
-                tags.add(elem.tagName());
-                ElementsCollection selenideElements = Selenide.$$(By.tagName(elem.tagName()));
-                numberSelenideElements=selenideElements.size();
-                System.out.println("number of selenide elements="+numberSelenideElements);
-                int id = 1;
-                for (SelenideElement temp2 : selenideElements) {
-                    System.out.println(id+"/"+numberSelenideElements+"/"+elementCounter + "/" + numberElements);
-
-                    processSelenideElement(temp2,elem,id);
-                    id++;
-                    //if(id>MAX_DEPTH2){
-                    //    continue;
-                    //}
-                }
-            }
-
-            System.out.println("out of loop");
-
-            PrintWriter writer = new PrintWriter(RESULTS_PATH + NAME+".txt", "UTF-8");
-            
-            for (String temp : elements) {
-                writer.println(temp);
-            }
-            writer.close();
-            
-            int[] conteo = new int[maxj];
-            for (String temp : elements) {
-                String[] aux = temp.split(",");
-                conteo[Integer.parseInt(aux[5]) - 1]++;
-            }
-
-            int acum = 0;
-            double[] acumulado = new double[maxj];
-            for (int i =0; i<conteo.length;++i) {
-                acum += conteo[i];
-                acumulado[i]=acum;
-            }
-            
-            BufferedImage img = null;
-            try{
-                img = ImageIO.read(new File(PICTURES_PATH+NAME + ".png"));
-            }catch (Exception e){
-                System.err.println("Trying to read '"+PICTURES_PATH+NAME+".png'");
-                e.printStackTrace();
-                System.exit(1);
-            }
-            Graphics2D graph = img.createGraphics();
-            graph.setColor(Color.RED);
-            ArrayList<String> elementsGraphed = new ArrayList<>();
-
-            for (String temp : elements) {
-                String[] aux = temp.split(",");
-                if (Integer.parseInt(aux[5]) < maxj && conteo[Integer.parseInt(aux[5])-1] > conteo[Integer.parseInt(aux[5])]) {
-                    int x = Integer.parseInt(aux[1]);
-                    int y = Integer.parseInt(aux[2]);
-                    int w = Integer.parseInt(aux[3]);
-                    int h = Integer.parseInt(aux[4]);
-
-                    graph.draw(new Rectangle(x, y, w, h));
-                    elementsGraphed.add(temp);
-                }
-            }
-
-            graph.dispose();
-            
-            //Here it generates the png file
-            ImageIO.write(img, "png", new File(RESULTS_PATH + NAME + ".png"));
+			} catch (Exception e1) {
+				System.err.println("Exception: "+e1);
+	            e1.printStackTrace();
+	            System.exit(1);
+			}
 
             System.out.println("DrawLevel terminado");
         }
-    }
-    
-    public static Document getDoc(String path, Boolean isOffline){
-        Document doc = null;
-        String url=path;
-        try {
-            if(isOffline){
-                url=toAbsolutePath(WEBSITES_PATH)+path;
-                System.out.println("Trying to open 'file://"+url+"'");
-                Selenide.open("file://"+url);
-                File in = new File(url2file(url));
-                doc = Jsoup.parse(in, "UTF-8", "http://www.google.com");
-            }else{
-                Selenide.open(url);
-                doc = Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 6.1; rv:24.0) Gecko/20100101 Firefox/24.0")
-                      .timeout(0)
-                      .referrer("http://www.google.com")
-                      .get(); 
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(1);
-        } 
-        return doc;
-    }
-
-    public static String namefile(String url) {
-        String new_url = url.replaceAll("/", "");
-        new_url = new_url.replaceAll("\\.", "");
-        new_url = new_url.replaceAll("www", "");
-        new_url = new_url.replaceAll("http", "");
-        new_url = new_url.replaceAll(":", "");
-        return new_url;
-    }
-
-    public static String toAbsolutePath(String relativePath){
-        Path p = Paths.get(relativePath);
-        String retVal="";
-        try {
-            retVal = p.toAbsolutePath().toRealPath().toString();
-        }catch(Exception e){
-            e.printStackTrace();
-            System.exit(1);
-        }
-        return retVal;
-    }
-
-    public static String url2file(String url) {
-        return url.replaceAll("%20", "\\ ");
     }
 }
