@@ -28,6 +28,8 @@ import org.openqa.selenium.*;
 import com.codeborne.selenide.Selenide;
 import java.nio.file.Paths;
 import java.nio.file.Path;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -72,7 +74,11 @@ public class DrawLevel {
         System.out.println("esto es DrawLevel");
         for (int k = 0; k < URLlist.length; ++k) {
             WebPage webpage= new WebPage(URLlist[k]);
-            webpage.getCoordinates();
+            try {
+                webpage.getCoordinates();
+            } catch (IOException ex) {
+                Logger.getLogger(DrawLevel.class.getName()).log(Level.SEVERE, null, ex);
+            }
             System.out.println("Max Depth="+webpage.getMaxDepth());
             webpage.getPng();
             System.out.println("DrawLevel terminado");

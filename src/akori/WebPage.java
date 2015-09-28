@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -42,7 +43,7 @@ public class WebPage {
     private Integer maxDepth;
     private ArrayList<String> coordinates;
     String name;
-    PrintWriter writer;
+    BufferedWriter writer;
     Integer objectId;
 
     public WebPage(String uri) {
@@ -50,7 +51,7 @@ public class WebPage {
         this.name = StringUtils.namefile(uri);
     }
 
-    public ArrayList<String> getCoordinates() {
+    public ArrayList<String> getCoordinates() throws IOException {
         coordinates = new ArrayList<>();
         By by = By.tagName("body");
         baseElem = Selenide.$(by);
@@ -66,14 +67,9 @@ public class WebPage {
         Integer numberSelenideElements = 0;
         System.out.println("number of elements=" + numberElements);
         Integer elementCounter = 0;
-        try {
-            writer = new PrintWriter(RESULTS_PATH + name + ".csv", "UTF-8");
-        } catch (Exception e) {
-            System.err.println("Trying to write '" + RESULTS_PATH + name + ".csv'");
-            e.printStackTrace();
-            System.exit(1);
-        }
-        writer.println("node_name,x,y,width,height,depth,has_text,id,k,object_id");
+        writer = new BufferedWriter(new PrintWriter(RESULTS_PATH + name + ".csv", "UTF-8"), 1024);
+        writer.write("node_name,x,y,width,height,depth,has_text,id,k,object_id");
+        writer.newLine();
         objectId = 0;
         for (Element elem : e1) {
             elementCounter++;
@@ -168,7 +164,7 @@ public class WebPage {
         }
     }
 
-    public void processSelenideElement(SelenideElement selenideElem, Element elem, Integer id) {
+    public void processSelenideElement(SelenideElement selenideElem, Element elem, Integer id) throws IOException {
         WebElement temp1 = selenideElem.toWebElement();
         Point po = temp1.getLocation();
         Dimension d = temp1.getSize();
@@ -192,7 +188,8 @@ public class WebPage {
         if (j > maxDepth) {
             maxDepth = j;
         }
-        writer.println(str);
+        writer.write(str);
+        writer.newLine();
     }
 
     public static Document getJsoupDoc(String path, Boolean isOffline) {

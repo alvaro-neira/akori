@@ -3,11 +3,16 @@ package cl.akori.main;
 import java.util.ArrayList;
 
 import akori.WebPage;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GetCsv {
-	public static final String RESULTS_PATH = "../results/";
+
+    public static final String RESULTS_PATH = "../results/";
     public static final String WEBSITES_PATH = "../websites/";
     public static final String PICTURES_PATH = "./build/reports/tests/";
+
     //Sorted by duration
 //    public static final String[] URLlist = {
 //    	"/ds_eggs/www.designsponge.com/2015/04/in-the-kitchen-with-marnie-andrea-and-jens-deviled-eggs.html", //2m7.147s
@@ -18,9 +23,14 @@ public class GetCsv {
 //    	"/es_berlin/www.elizabethstreet.com/travel/berlin-international-film-festival/the-luxer.html", //5m36.069s
 //    	"/ds_argentina/www.designsponge.com/2012/12/palermo-buenos-aires-argentina-city-guide.html" //6m7.363s
 //    };
-	public static void main(String[] args) {
-        WebPage webpage= new WebPage(args[0].trim());
-        ArrayList<String>coordinates = webpage.getCoordinates();
-	}
+
+    public static void main(String[] args) {
+        WebPage webpage = new WebPage(args[0].trim());
+        try {
+            ArrayList<String> coordinates = webpage.getCoordinates();
+        } catch (IOException ex) {
+            Logger.getLogger(GetCsv.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 }
