@@ -32,6 +32,7 @@ public class WebPage {
 	private ArrayList<String> coordinates;
 	String name;
 	PrintWriter writer;
+	Integer objectId;
 	public WebPage(String uri) {
 		this.uri = uri;
 		this.name = StringUtils.namefile(uri);
@@ -60,7 +61,8 @@ public class WebPage {
             e.printStackTrace();
             System.exit(1);
 		} 
-        writer.println("node_name,x,y,width,height,depth,has_text,id,k");
+        writer.println("node_name,x,y,width,height,depth,has_text,id,k,object_id");
+        objectId=0;
 		for (Element elem : e1) {
 			elementCounter++;
 			System.out.println("Examining element '" + elem.nodeName() + "'");
@@ -89,8 +91,8 @@ public class WebPage {
 		return coordinates;
 	}
 
-	public void processSelenideElement(SelenideElement elem, Element temp, Integer id) {
-		WebElement temp1 = elem.toWebElement();
+	public void processSelenideElement(SelenideElement selenideElem, Element elem, Integer id) {
+		WebElement temp1 = selenideElem.toWebElement();
 		Point po = temp1.getLocation();
 		Dimension d = temp1.getSize();
 		if (d.width <= 0 || d.height <= 0 || po.x < 0 || po.y < 0) {
@@ -98,21 +100,17 @@ public class WebPage {
 		}
 		int dep = 0;
 		int j = 1;
-		for (; !elem.equals(baseElem); j++) {
-			elem = elem.parent();
+		for (; !selenideElem.equals(baseElem); j++) {
+			selenideElem = selenideElem.parent();
 			if (j > MAX_DEPTH) {
 				break;
 			}
 		}
 		Integer k = 0;
 		String str = "";
-		if (temp.hasText()) {
-			str = temp.nodeName() + "," + po.x + "," + po.y + "," + d.width + "," + d.height + "," + j + "," + 1 + ","
-					+ id + "," + (k + 1);
-		} else {
-			str = temp.nodeName() + "," + po.x + "," + po.y + "," + d.width + "," + d.height + "," + j + "," + 0 + ","
-					+ id + "," + (k + 1);
-		}
+		
+		str = elem.nodeName() + "," + po.x + "," + po.y + "," + d.width + "," + d.height + "," + j + "," 
+		      + (elem.hasText()?1:0) + ","	+ id + "," + (k + 1)+","+(++objectId);
 		coordinates.add(str);
 		if (j > maxDepth) {
 			maxDepth = j;

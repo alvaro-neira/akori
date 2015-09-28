@@ -8,6 +8,7 @@ package akori;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -78,6 +79,12 @@ public class DrawLevel {
                 BufferedImage img = ImageIO.read(new File(PICTURES_PATH+webpage.getName() + ".png"));
                 Graphics2D graph = img.createGraphics();
                 graph.setColor(Color.RED);
+//                graph.setFont(	);
+                Font currentFont = graph.getFont();
+                Integer fontSize=12;
+                Font newFont = new Font(currentFont.getFontName(), Font.BOLD, fontSize);
+                graph.setFont(newFont);
+                
                 ArrayList<String> elementsGraphed = new ArrayList<>();
 				String line=reader.readLine(); //header
 				line=reader.readLine();
@@ -91,6 +98,8 @@ public class DrawLevel {
 	                    int h = Integer.parseInt(aux[4]);
 
 	                    graph.draw(new Rectangle(x, y, w, h));
+	                    String id=aux[9];
+	                    graph.drawString(id, x, y+fontSize-1);
 	                    elementsGraphed.add(line);
 	                }
 	                line=reader.readLine();
