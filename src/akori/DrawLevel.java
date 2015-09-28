@@ -72,49 +72,9 @@ public class DrawLevel {
         System.out.println("esto es DrawLevel");
         for (int k = 0; k < URLlist.length; ++k) {
             WebPage webpage= new WebPage(URLlist[k]);
-            ArrayList<String>coordinates = webpage.getCoordinates();
-            try {
-            	BufferedReader reader = new BufferedReader(new FileReader(RESULTS_PATH+webpage.getName()+".csv"));
-                int[] conteo = new int[webpage.getMaxDepth()];
-                BufferedImage img = ImageIO.read(new File(PICTURES_PATH+webpage.getName() + ".png"));
-                Graphics2D graph = img.createGraphics();
-                graph.setColor(Color.RED);
-//                graph.setFont(	);
-                Font currentFont = graph.getFont();
-                Integer fontSize=12;
-                Font newFont = new Font(currentFont.getFontName(), Font.BOLD, fontSize);
-                graph.setFont(newFont);
-                
-                ArrayList<String> elementsGraphed = new ArrayList<>();
-				String line=reader.readLine(); //header
-				line=reader.readLine();
-				while(line!=null){
-					String[] aux = line.split(",");
-	                conteo[Integer.parseInt(aux[5]) - 1]++;
-	                if (Integer.parseInt(aux[5]) < webpage.getMaxDepth() && conteo[Integer.parseInt(aux[5])-1] > conteo[Integer.parseInt(aux[5])]) {
-	                    int x = Integer.parseInt(aux[1]);
-	                    int y = Integer.parseInt(aux[2]);
-	                    int w = Integer.parseInt(aux[3]);
-	                    int h = Integer.parseInt(aux[4]);
-
-	                    graph.draw(new Rectangle(x, y, w, h));
-	                    String id=aux[9];
-	                    graph.drawString(id, x, y+fontSize-1);
-	                    elementsGraphed.add(line);
-	                }
-	                line=reader.readLine();
-				}
-	            graph.dispose();
-	            reader.close();
-	            //Here it generates the png file
-	            ImageIO.write(img, "png", new File(RESULTS_PATH + webpage.getName() + ".png"));
-
-			} catch (Exception e1) {
-				System.err.println("Exception: "+e1);
-	            e1.printStackTrace();
-	            System.exit(1);
-			}
-
+            webpage.getCoordinates();
+            System.out.println("Max Depth="+webpage.getMaxDepth());
+            webpage.getPng();
             System.out.println("DrawLevel terminado");
         }
     }

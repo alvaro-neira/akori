@@ -6,7 +6,7 @@
 
 package akori;
 
-import static akori.DrawLevel.namefile;
+//import static akori.DrawLevel.namefile;
 import java.io.IOException;
 
 /**
@@ -53,10 +53,10 @@ public class lista {
         System.out.println("lista = {");
         for (int k = 0; k < URLlist.length; ++k) {
 
-            String URL = URLlist[k];
-            String NAME = namefile(URL);
+            //String URL = URLlist[k];
+            //String NAME = namefile(URL);
             
-            System.out.println("'"+NAME+".txt', ...");
+            //System.out.println("'"+NAME+".txt', ...");
         
         }
         System.out.println("};");

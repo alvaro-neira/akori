@@ -6,7 +6,7 @@
 package akori;
 
 import static akori.Cluster2txt.listFilesForFolder;
-import static akori.DrawLevel.namefile;
+//import static akori.DrawLevel.namefile;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -76,7 +76,7 @@ public class LevelsFile {
 //            name = name.replace("cluster", "");
         for (int k = 0; k < 32; ++k) {
             String URL = URLlist[k];
-            String NAME = namefile(URL);
+            String NAME = "wa";//namefile(URL);
 //            String NAME = URL;
             int maxc = 0;
             int maxj = 0;
