@@ -43,7 +43,7 @@ public class WebPage {
     private Integer maxDepth;
     private ArrayList<String> coordinates;
     String name;
-    BufferedWriter writer;
+    PrintWriter writer;
     Integer objectId;
 
     public WebPage(String uri) {
@@ -67,9 +67,9 @@ public class WebPage {
         Integer numberSelenideElements = 0;
         System.out.println("number of elements=" + numberElements);
         Integer elementCounter = 0;
-        writer = new BufferedWriter(new PrintWriter(RESULTS_PATH + name + ".csv", "UTF-8"), 1024);
-        writer.write("node_name,x,y,width,height,depth,has_text,id,k,object_id");
-        writer.newLine();
+//        writer = new BufferedWriter(new PrintWriter(RESULTS_PATH + name + ".csv", "UTF-8"), 128);
+        writer = new PrintWriter(RESULTS_PATH + name + ".csv", "UTF-8");
+        writer.println("node_name,x,y,width,height,depth,has_text,id,k,object_id");
         objectId = 0;
         for (Element elem : e1) {
             elementCounter++;
@@ -188,8 +188,7 @@ public class WebPage {
         if (j > maxDepth) {
             maxDepth = j;
         }
-        writer.write(str);
-        writer.newLine();
+        writer.println(str);
     }
 
     public static Document getJsoupDoc(String path, Boolean isOffline) {
