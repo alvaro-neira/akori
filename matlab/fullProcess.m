@@ -33,7 +33,7 @@ fileID = fopen(filename,'r');
 % This call is based on the structure of the file used to generate this
 % code. If an error occurs for a different file, try regenerating the code
 % from the Import Tool.
-dataArray = textscan(fileID, formatSpec, 'Delimiter', delimiter, 'EmptyValue' ,NaN,'HeaderLines' ,startRow-1, 'ReturnOnError', false);
+dataArray = textscan(fileID, formatSpec, 'Delimiter', delimiter, 'EmptyValue' ,NaN,'HeaderLines' ,startRow-1, 'ReturnOnError', true);
 
 %% Close the text file.
 fclose(fileID);
@@ -113,3 +113,4 @@ end
 timestamp_double=datenum(timestamp_fixed,'yyyymmdd.HHMMSS.FFF');
 
 plot(timestamp_double,original_pupil_area,'r',timestamp_double,pupil_area_interpolated,'b')
+
