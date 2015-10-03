@@ -1,3 +1,5 @@
+addpath internal;
+
 %% Import data from text file.
 % Script for importing data from the following text file:
 %
@@ -96,21 +98,37 @@ for i=1:length(startIndex)
 
 end
 
+pupil_area_fixed=pupil_area;
+for i=1:length(timestamp)
+    s=char(saccade(i));
+        if length(s) > 0 && strcmp(s(1:4),'DIR_')
+        delta=pupil_area(i+1)-pupil_area(i); 
+        pupil_area_fixed(i)=pupil_area(i-2);
+        pupil_area_fixed(i-1)=pupil_area(i-2);
+        for j=i+1:length(timestamp)-1
+            pupil_area_fixed(j)=pupil_area_fixed(j-1)+delta;
+                delta=pupil_area(j+1)-pupil_area(j);
+        end
+        break;
+    end
+    end
 
- [b,a] = butter(1,0.01);
-   pupil_area_interpolated  = filtfilt(b,a,pupil_area);
+ plot(1:length(original_pupil_area),original_pupil_area,'r',1:length(pupil_area),pupil_area_fixed,'b')
+
+% [b,a] = butter(1,0.01);
+   %pupil_area_interpolated  = filtfilt(b,a,pupil_area);
 
 % plot(1:length(original_pupil_area),original_pupil_area,'r',1:length(pupil_area_interpolated),pupil_area_interpolated,'b')
 
-timestamp_fixed=timestamp;
-for i=1:length(timestamp)
-    s=char(timestamp(i));
-    if strcmp(s(1:4),'----')
-        timestamp_fixed(i)=cellstr(s(39:60));
-    end
-end
+%timestamp_fixed=timestamp;
+%for i=1:length(timestamp)
+    %s=char(timestamp(i));
+    %if strcmp(s(1:4),'----')
+        %timestamp_fixed(i)=cellstr(s(39:60));
+    %end
+%end
 
-timestamp_double=datenum(timestamp_fixed,'yyyymmdd.HHMMSS.FFF');
-
-plot(timestamp_double,original_pupil_area,'r',timestamp_double,pupil_area_interpolated,'b')
+%timestamp_double=datenum(timestamp_fixed,'yyyymmdd.HHMMSS.FFF');
+%
+%plot(timestamp_double,original_pupil_area,'r',timestamp_double,pupil_area_interpolated,'b')
 
