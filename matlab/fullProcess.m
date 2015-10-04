@@ -99,22 +99,31 @@ for i=1:length(startIndex)
 end
 
 pupil_area_fixed=pupil_area;
+aux=pupil_area_fixed;
+nsaccades=0;
+for k=1:length(timestamp)-1
+    delta(k)=aux(k+1)-aux(k);
+end  
 for i=1:length(timestamp)
     s=char(saccade(i));
+    
     if length(s) > 0 && strcmp(s(1:4),'DIR_')
-        for k=i:length(timestamp)-1
-            delta(k)=pupil_area_fixed(k+1)-pupil_area_fixed(k);
-        end    
-        pupil_area_fixed(i)=pupil_area_fixed(i-2);
-        pupil_area_fixed(i-1)=pupil_area_fixed(i-2);
+          
+        pupil_area_fixed(i)=aux(i-2);
+        pupil_area_fixed(i-1)=aux(i-2);
         for j=i:length(timestamp)-1
             pupil_area_fixed(j+1)=pupil_area_fixed(j)+delta(j);
         end
-        break;
+        aux=pupil_area_fixed;
+        nsaccades=nsaccades+1;
+%         if nsaccades>3
+%             break;
+%         end
+            
      end
 end
 
- plot(1:length(original_pupil_area),original_pupil_area,'r',1:length(pupil_area),pupil_area_fixed,'b')
+ plot(1:length(pupil_area),pupil_area,'r',1:length(pupil_area),pupil_area_fixed,'b')
 
 % [b,a] = butter(1,0.01);
    %pupil_area_interpolated  = filtfilt(b,a,pupil_area);
