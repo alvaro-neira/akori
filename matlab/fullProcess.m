@@ -139,22 +139,22 @@ end
 
 
 pupil_area_fixed(1:100)
-plot(1:nrows,pupil_area_interpolated,'r',1:nrows,pupil_area_fixed,'b')
 
-% [b,a] = butter(1,0.01);
-   %pupil_area_interpolated  = filtfilt(b,a,pupil_area);
 
-% plot(1:length(original_pupil_area),original_pupil_area,'r',1:length(pupil_area_interpolated),pupil_area_interpolated,'b')
+[b,a] = butter(1,0.01);
+pupil_area_filtered = filtfilt(b,a,pupil_area_fixed);
 
-%timestamp_fixed=timestamp;
-%for i=1:length(timestamp)
-    %s=char(timestamp(i));
-    %if strcmp(s(1:4),'----')
-        %timestamp_fixed(i)=cellstr(s(39:60));
-    %end
-%end
 
-%timestamp_double=datenum(timestamp_fixed,'yyyymmdd.HHMMSS.FFF');
-%
+
+timestamp_fixed=timestamp;
+for i=1:nrows
+    s=char(timestamp(i));
+    if strcmp(s(1:4),'----')
+        timestamp_fixed(i)=cellstr(s(39:60));
+    end
+end
+
+timestamp_double=datenum(timestamp_fixed,'yyyymmdd.HHMMSS.FFF');
+plot(timestamp_double,pupil_area_fixed,'r',timestamp_double,pupil_area_filtered,'b')
 %plot(timestamp_double,original_pupil_area,'r',timestamp_double,pupil_area_interpolated,'b')
 % plot(1:nrows,pupil_area_interpolated,'b',1:nrows,original_pupil_area,'r')
