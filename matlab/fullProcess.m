@@ -65,9 +65,11 @@ clearvars filename delimiter startRow formatSpec fileID dataArray ans;
 % Done Data Importing
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-original_pupil_area = pupil_area;
 % pupil_area is a header of the csv file that must be provided
 % eps is a MATLAB value (see http://www.mathworks.com/help/matlab/ref/eps.html)
+original_pupil_area = cpyvec(pupil_area);
+pupil_area_interpolated=cpyvec(pupil_area);
+
 tpupil_area = (abs(pupil_area) >= eps);
 
 % Next, find the starting indices, ending indices, and duration of each string of zeroes
@@ -94,50 +96,50 @@ indices = find(cumsum(indices));
 for i=1:length(startIndex)
     interpolation = generateInterpolation(pupil_area(startIndex(i)-1),pupil_area(endIndex(i)+1),duration(i)+2);
 
-    pupil_area(startIndex(i):endIndex(i)) = interpolation(2:end-1);
+    pupil_area_interpolated(startIndex(i):endIndex(i)) = interpolation(2:end-1);
 
 end
 
-saccades_list=zeros(length(pupil_area),1);
+nrows=length(timestamp);
 
-for i=1:length(timestamp)
+%timestamp_fixed=timestamp;
+saccades_list=zeros(nrows,1);
+
+for i=1:nrows
     s=char(saccade(i));
     if length(s) > 0 && strcmp(s(1:4),'DIR_')
         saccades_list(i)=1;
-          
     end
 end
 
 saccades_indexes=find(saccades_list);
-pupil_area_fixed=pupil_area;
-nsaccades=0;
-for i=1:length(timestamp)-1
-    delta(i)=pupil_area(i+1)-pupil_area(i);
+pupil_area_fixed=cpyvec(pupil_area_interpolated);
+plot(1:nrows,pupil_area_interpolated,'r',1:nrows,pupil_area_fixed,'b')
+ 
+for i=1:nrows-1
+    delta(i)=pupil_area_interpolated(i+1)-pupil_area_interpolated(i);
 end  
+
+% limit=100;
+% for i=1:limit
+%     y1(i)=original_pupil_area(i);
+%     
+%     y3(i)=pupil_area_interpolated(i);
+% end
+% plot(1:limit,y1,'r',1:limit,y3,'g');
 for k=1:length(saccades_indexes)-1
     i=saccades_indexes(k);
-          
-    pupil_area_fixed(i)=pupil_area(i-1);
-    pupil_area_fixed(i+1)=pupil_area(i-1);
+    pupil_area_fixed(i)=pupil_area_interpolated(i-1);
+    pupil_area_fixed(i+1)=pupil_area_interpolated(i-1);
     for j=i:saccades_indexes(k+1)-3
         pupil_area_fixed(j+2)=pupil_area_fixed(j+1)+delta(j+1);
     end
-    nsaccades=nsaccades+1;
-%         if nsaccades>3
-%             break;
-%         end
-            
 end
 
 
-limit=100;
-for i=1:limit
-    y1(i)=pupil_area(i);
-    y2(i)=saccades_list(i)*1000;
-    y3(i)=pupil_area_fixed(i);
-end
- plot(1:length(pupil_area),pupil_area,'r',1:length(pupil_area),pupil_area_fixed,'b')
- %plot(1:limit,y1,'r',1:limit,y2,'b',1:limit,y3,'g');
+
+pupil_area_fixed(1:100)
+plot(1:nrows,pupil_area_interpolated,'r',1:nrows,pupil_area_fixed,'b')
 
 % [b,a] = butter(1,0.01);
    %pupil_area_interpolated  = filtfilt(b,a,pupil_area);
@@ -155,4 +157,4 @@ end
 %timestamp_double=datenum(timestamp_fixed,'yyyymmdd.HHMMSS.FFF');
 %
 %plot(timestamp_double,original_pupil_area,'r',timestamp_double,pupil_area_interpolated,'b')
-
+% plot(1:nrows,pupil_area_interpolated,'b',1:nrows,original_pupil_area,'r')
