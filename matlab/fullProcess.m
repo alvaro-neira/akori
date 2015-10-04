@@ -98,32 +98,46 @@ for i=1:length(startIndex)
 
 end
 
-pupil_area_fixed=pupil_area;
-aux=pupil_area_fixed;
-nsaccades=0;
-for k=1:length(timestamp)-1
-    delta(k)=aux(k+1)-aux(k);
-end  
+saccades_list=zeros(length(pupil_area),1);
+
 for i=1:length(timestamp)
     s=char(saccade(i));
-    
     if length(s) > 0 && strcmp(s(1:4),'DIR_')
+        saccades_list(i)=1;
           
-        pupil_area_fixed(i)=aux(i-2);
-        pupil_area_fixed(i-1)=aux(i-2);
-        for j=i:length(timestamp)-1
-            pupil_area_fixed(j+1)=pupil_area_fixed(j)+delta(j);
-        end
-        aux=pupil_area_fixed;
-        nsaccades=nsaccades+1;
+    end
+end
+
+saccades_indexes=find(saccades_list);
+pupil_area_fixed=pupil_area;
+nsaccades=0;
+for i=1:length(timestamp)-1
+    delta(i)=pupil_area(i+1)-pupil_area(i);
+end  
+for k=1:length(saccades_indexes)-1
+    i=saccades_indexes(k);
+          
+    pupil_area_fixed(i)=pupil_area(i-1);
+    pupil_area_fixed(i+1)=pupil_area(i-1);
+    for j=i:saccades_indexes(k+1)-3
+        pupil_area_fixed(j+2)=pupil_area_fixed(j+1)+delta(j+1);
+    end
+    nsaccades=nsaccades+1;
 %         if nsaccades>3
 %             break;
 %         end
             
-     end
 end
 
+
+limit=100;
+for i=1:limit
+    y1(i)=pupil_area(i);
+    y2(i)=saccades_list(i)*1000;
+    y3(i)=pupil_area_fixed(i);
+end
  plot(1:length(pupil_area),pupil_area,'r',1:length(pupil_area),pupil_area_fixed,'b')
+ %plot(1:limit,y1,'r',1:limit,y2,'b',1:limit,y3,'g');
 
 % [b,a] = butter(1,0.01);
    %pupil_area_interpolated  = filtfilt(b,a,pupil_area);
