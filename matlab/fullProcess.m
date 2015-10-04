@@ -157,18 +157,16 @@ for filecounter=1:length(filelist)
     % plot(1:limit,y1,'r',1:limit,y3,'g');
     for k=1:length(saccades_indexes)-1
         i=saccades_indexes(k);
-        pupil_area_fixed(i)=pupil_area_interpolated(i-1);
-        pupil_area_fixed(i+1)=pupil_area_interpolated(i-1);
-        for j=i:saccades_indexes(k+1)-3
-            pupil_area_fixed(j+2)=pupil_area_fixed(j+1)+delta(j+1);
+        if i>1
+            pupil_area_fixed(i)=pupil_area_interpolated(i-1);
+            pupil_area_fixed(i+1)=pupil_area_interpolated(i-1);
+            for j=i:saccades_indexes(k+1)-3
+                pupil_area_fixed(j+2)=pupil_area_fixed(j+1)+delta(j+1);
+            end
         end
     end
 
-
-
-    pupil_area_fixed(1:100)
-
-
+  
     [b,a] = butter(1,0.01);
     pupil_area_filtered = filtfilt(b,a,pupil_area_fixed);
 
