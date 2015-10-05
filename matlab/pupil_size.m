@@ -95,8 +95,8 @@ for filecounter=1:length(filelist)
 
     % pupil_area is a header of the csv file that must be provided
     % eps is a MATLAB value (see http://www.mathworks.com/help/matlab/ref/eps.html)
-    original_pupil_area = cpyvec(pupil_area);
-    pupil_area_interpolated=cpyvec(pupil_area);
+    original_pupil_area = pupil_area;
+    pupil_area_interpolated=pupil_area;
     nrows=length(timestamp);
 
     tpupil_area = (abs(pupil_area) >= eps);
@@ -141,7 +141,7 @@ for filecounter=1:length(filelist)
     end
 
     saccades_indexes=find(saccades_list);
-    pupil_area_fixed=cpyvec(pupil_area_interpolated);
+    pupil_area_fixed=pupil_area_interpolated;
     plot(1:nrows,pupil_area_interpolated,'r',1:nrows,pupil_area_fixed,'b')
 
     for i=1:nrows-1
