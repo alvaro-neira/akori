@@ -69,7 +69,8 @@ for filecounter=3:3 %length(filelist)
         end
     end    
     
-    plot(timestamp2double(timestamp),gaze_x,'r',timestamp2double(timestamp2),scrollTop,'b');
+    %plot(timestamp2double(timestamp),gaze_x,'r',timestamp2double(timestamp2),scrollTop,'b');
+    plot(gaze_y,gaze_x,'o','MarkerSize',0.5);
     %h = zoom;
     %set(h,'Motion','horizontal','Enable','on');
     

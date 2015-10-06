@@ -166,7 +166,9 @@ for filecounter=1:length(filelist)
         end
     end
 
-  
+  plot(1:nrows,pupil_area_interpolated,'r',1:nrows,pupil_area_fixed,'b');
+    h = zoom;
+    set(h,'Motion','horizontal','Enable','on');
     [b,a] = butter(1,0.01);
     pupil_area_filtered = filtfilt(b,a,pupil_area_fixed);
 
