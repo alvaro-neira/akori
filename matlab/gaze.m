@@ -4,6 +4,7 @@ maxx=1920;
 maxy=1080;
 datapath='/Users/aneira/lalo/data/';
 url_prefix='file:///C:/Users/Gino/Desktop/websites/';
+menu_size=134;
 lst=[
 'suj1/sofey_20150622.171003.694091/vision.csv ';
 'suj2/sofey_20150623.151146.284899/vision.csv ';
@@ -57,6 +58,8 @@ for filecounter=3:3 %length(filelist)
     [timestamp2,outerWidth,outerHeight,innerWidth,innerHeight,screenX,...
         screenY,scrollTop,scrollLeft,url_id,user_url] = importNavegacion(filename2);
     ts_nav=timestamp2double(timestamp2);
+    ts_gaze=timestamp2double(timestamp);
+
     for i=1:nrows
         if gaze_x(i) < 1
             gaze_x(i)=1;
@@ -72,14 +75,47 @@ for filecounter=3:3 %length(filelist)
         end
     end    
     
-    %plot(timestamp2double(timestamp),gaze_x,'r',timestamp2double(timestamp2),scrollTop,'b');
+    
     %plot(gaze_y,gaze_x,'o','MarkerSize',0.5);
     %h = zoom;
     %set(h,'Motion','horizontal','Enable','on');
     [id,url,pic]=findByPageId('columbia_about');
+    ini=length(ts_nav)+1;
+    fin=0;
+    found=0;
     for i=1:length(ts_nav)
         if strcmp(user_url(i),strcat(url_prefix,url))
-            timestamp2(i)
+            found=1;
+            if i<ini
+                ini=i;
+            end
+        elseif found
+            fin=i;
+            break;
+        
         end    
     end
+    ini2=length(ts_gaze)+1;
+    fin2=0;
+    for i=1:length(ts_gaze)
+        if ts_gaze(i) >= ts_nav(ini) && ts_gaze(i) < ts_nav(fin)
+            if i<ini2
+                ini2=i;
+            end
+            if i>fin2
+                fin2=i;
+            end
+        end
+    end
+    gx=zeros(fin2+1-ini2,1);
+    gy=zeros(fin2+1-ini2,1);
+    for i=1:fin2+1-ini2
+        gx(i)=gaze_x(i+ini2);
+        gy(i)=gaze_y(i+ini2);
+    end
+    img=imread('/Users/aneira/lalo/data/suj3/sofey_browserdata_20150623.171333.420/file____C__Users_Gino_Desktop_websites_columbia_ab_cec2a9d6fe59eefcfc588f3721aec312b22cfaed.png');
+    %img=imread('/Users/aneira/results/columbia_aboutcolumbiaeducontentabout-columbiahtml.png');
+    image([0 1920],[0 1080],img);
+    hold on;
+    plot(gx,gy,'o');
 end
