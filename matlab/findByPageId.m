@@ -1,5 +1,5 @@
-function [page_id1,url1,picture1]=findByPageId(id)
-	[page_id,url,picture]=importIds('pages.csv');
+function [page_id1,url1,picture1, coordinates_file1]=findByPageId(id)
+	[page_id,url,picture, coordinates_file]=importIds('pages.csv');
 	page_id1=id;
 	url1='';
 	picture1='';
@@ -7,8 +7,9 @@ function [page_id1,url1,picture1]=findByPageId(id)
        	if strcmp(id,page_id(i))
 			url1=url(i);
 			picture1=picture(i);
+            coordinates_file1=coordinates_file(i);
 			break;
 		end
-	end
-
+    end
+    
 end

@@ -1,11 +1,13 @@
 function [ maxx, datapath, url_prefix, xoffsets, yoffsets, maxy, filelist, ...
-    filelist2,questionlist ] = hardCodedData( )
+    filelist2,questionlist, ms, coordinates_path ] = hardCodedData( )
 maxx=1920;
 datapath='/Users/aneira/lalo/data/';
+coordinates_path='/Users/aneira/results/';
 url_prefix='file:///C:/Users/Gino/Desktop/websites/';
 xoffsets=[0;];
 yoffsets=[120;];
 maxy=946;
+ms=1.157401129603386e-08;
 lst=[
 'suj1/sofey_20150622.171003.694091/vision.csv ';
 'suj2/sofey_20150623.151146.284899/vision.csv ';
