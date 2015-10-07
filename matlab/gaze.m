@@ -1,11 +1,11 @@
 addpath internal;
 
 maxx=1920;
-maxy=12749;
 datapath='/Users/aneira/lalo/data/';
 url_prefix='file:///C:/Users/Gino/Desktop/websites/';
-xoffsets=[150;];
-yoffsets=[210;];
+xoffsets=[0;];
+yoffsets=[120;];
+maxy=946;
 lst=[
 'suj1/sofey_20150622.171003.694091/vision.csv ';
 'suj2/sofey_20150623.151146.284899/vision.csv ';
@@ -60,12 +60,10 @@ for filecounter=1:1 %length(filelist)
     ts_nav=timestamp2double(timestamp2);
     ts_gaze=timestamp2double(timestamp);
 
-   
-    
-    %plot(gaze_y,gaze_x,'o','MarkerSize',0.5);
-    %h = zoom;
-    %set(h,'Motion','horizontal','Enable','on');
     [id,url,pic]=findByPageId('ds_london');
+    if strcmp(pic,'')
+        error('Picture not found');
+    end
     ini=length(ts_nav)+1;
     fin=0;
     found=0;
@@ -81,8 +79,7 @@ for filecounter=1:1 %length(filelist)
         
         end    
     end
-    ini
-    fin
+    
     ini2=length(ts_gaze)+1;
     fin2=0;
     for i=1:length(ts_gaze)
@@ -95,31 +92,8 @@ for filecounter=1:1 %length(filelist)
             end
         end
     end
-    gx=zeros(fin2+1-ini2,1);
-    gy=zeros(fin2+1-ini2,1);
-    for i=1:fin2+1-ini2
-        gx(i)=gaze_x(i+ini2)+xoffsets(filecounter);
-        gy(i)=gaze_y(i+ini2);
-        if gx(i) < 1 || gy(i) < 1 || gx(i) > maxx || gx(i) > maxy
-            gx(i)=NaN;
-            gy(i)=NaN;
-            continue;
-        end
-        
-        ts=ts_gaze(i+ini2);
-        for k=ini:fin
-            if ts_nav(k)<=ts && ts_nav(k+1) >=ts
-                scroll=scrollTop(k);
-            end
-        end
-        gy(i)=gy(i)+scroll;
-    end
-    img=imread(char(strcat(strcat(datapath,'pngs/'),pic)));
-    %img=imread('/Users/aneira/results/columbia_aboutcolumbiaeducontentabout-columbiahtml.png');
-    image([0 1920],[yoffsets(filecounter) maxy],img);
-    hold on;
-    plot(gx,gy,'r');
-    ylim([0 maxy]);
-    xlim([0 maxx]);
-
+    [gx, gy, newmaxy]=getGaze(ini2, fin2, ini, fin, maxx, maxy, gaze_x, gaze_y, ...
+        xoffsets(filecounter), ts_gaze, ts_nav, scrollTop);
+    newmaxy
+    plotimg(char(strcat(datapath,'pngs/')),maxx,newmaxy,pic,yoffsets(filecounter),gx,gy);   
 end
