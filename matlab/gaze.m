@@ -1,10 +1,11 @@
 addpath internal;
 
 maxx=1920;
-maxy=1080;
+maxy=12749;
 datapath='/Users/aneira/lalo/data/';
 url_prefix='file:///C:/Users/Gino/Desktop/websites/';
-menu_size=134;
+xoffsets=[150;];
+yoffsets=[210;];
 lst=[
 'suj1/sofey_20150622.171003.694091/vision.csv ';
 'suj2/sofey_20150623.151146.284899/vision.csv ';
@@ -44,13 +45,12 @@ nav=[
 'suj15/sofey_browserdata_20150708.160401.530/navegacion.csv';
 'suj16/sofey_browserdata_20150710.103942.244/navegacion.csv';
 'suj17/sofey_browserdata_20150710.130140.316/navegacion.csv';
-'suj18/sofey_browserdata_20150710.153632.395/navegacion.csv';
 'suj19/sofey_browserdata_20150713.103756.244/navegacion.csv';
 'suj20/sofey_browserdata_20150714.132419.903/navegacion.csv';
 ];
 filelist=cellstr(lst);
 filelist2=cellstr(nav);
-for filecounter=3:3 %length(filelist)
+for filecounter=1:1 %length(filelist)
     filename = strcat(datapath,char(filelist(filecounter)));
     filename2 = strcat(datapath,char(filelist2(filecounter)));
     [timestamp,frame_number,gaze_x,gaze_y,pupil_axis1,pupil_axis2,pupil_area,saccade,blink]=importVision(filename);
@@ -60,26 +60,12 @@ for filecounter=3:3 %length(filelist)
     ts_nav=timestamp2double(timestamp2);
     ts_gaze=timestamp2double(timestamp);
 
-    for i=1:nrows
-        if gaze_x(i) < 1
-            gaze_x(i)=1;
-        end
-        if gaze_y(i) < 1
-            gaze_y(i)=1;
-        end
-        if gaze_x(i) > maxx
-            gaze_x(i)=maxx;
-        end
-        if gaze_y(i) > maxy
-            gaze_y(i)=maxy;
-        end
-    end    
-    
+   
     
     %plot(gaze_y,gaze_x,'o','MarkerSize',0.5);
     %h = zoom;
     %set(h,'Motion','horizontal','Enable','on');
-    [id,url,pic]=findByPageId('columbia_about');
+    [id,url,pic]=findByPageId('ds_london');
     ini=length(ts_nav)+1;
     fin=0;
     found=0;
@@ -95,6 +81,8 @@ for filecounter=3:3 %length(filelist)
         
         end    
     end
+    ini
+    fin
     ini2=length(ts_gaze)+1;
     fin2=0;
     for i=1:length(ts_gaze)
@@ -110,12 +98,28 @@ for filecounter=3:3 %length(filelist)
     gx=zeros(fin2+1-ini2,1);
     gy=zeros(fin2+1-ini2,1);
     for i=1:fin2+1-ini2
-        gx(i)=gaze_x(i+ini2);
+        gx(i)=gaze_x(i+ini2)+xoffsets(filecounter);
         gy(i)=gaze_y(i+ini2);
+        if gx(i) < 1 || gy(i) < 1 || gx(i) > maxx || gx(i) > maxy
+            gx(i)=NaN;
+            gy(i)=NaN;
+            continue;
+        end
+        
+        ts=ts_gaze(i+ini2);
+        for k=ini:fin
+            if ts_nav(k)<=ts && ts_nav(k+1) >=ts
+                scroll=scrollTop(k);
+            end
+        end
+        gy(i)=gy(i)+scroll;
     end
-    img=imread('/Users/aneira/lalo/data/suj3/sofey_browserdata_20150623.171333.420/file____C__Users_Gino_Desktop_websites_columbia_ab_cec2a9d6fe59eefcfc588f3721aec312b22cfaed.png');
+    img=imread(char(strcat(strcat(datapath,'pngs/'),pic)));
     %img=imread('/Users/aneira/results/columbia_aboutcolumbiaeducontentabout-columbiahtml.png');
-    image([0 1920],[0 1080],img);
+    image([0 1920],[yoffsets(filecounter) maxy],img);
     hold on;
-    plot(gx,gy,'o');
+    plot(gx,gy,'r');
+    ylim([0 maxy]);
+    xlim([0 maxx]);
+
 end

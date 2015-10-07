@@ -4,6 +4,8 @@ function [page_id1,url1,picture1]=findByPageId(id)
 	url1='';
 	picture1='';
 	for i=1:length(page_id)
+        id
+        page_id(i)
 		if strcmp(id,page_id(i))
 			url1=url(i);
 			picture1=picture(i);
