@@ -20,6 +20,7 @@ function [ gx, gy, maxy ] = getGaze( ini, fin, navini, navfin, maxx, oldmaxy, ga
     gy=zeros(size,1);
     maxscroll=0;
     maxy=oldmaxy;
+  
     for i=1:size
         gx(i)=gaze_x(i+ini)+xoffset;
         gy(i)=gaze_y(i+ini);
@@ -30,7 +31,9 @@ function [ gx, gy, maxy ] = getGaze( ini, fin, navini, navfin, maxx, oldmaxy, ga
         end
         
         ts=ts_gaze(i+ini);
+        
         for k=navini:navfin
+            
             if ts_nav(k)<=ts && ts_nav(k+1) >=ts
                 scroll=scrollTop(k);
                 if maxscroll<scroll
@@ -41,6 +44,6 @@ function [ gx, gy, maxy ] = getGaze( ini, fin, navini, navfin, maxx, oldmaxy, ga
         maxy=oldmaxy+scroll;
         gy(i)=gy(i)+scroll;
     end
-    maxy=oldmaxy+maxscroll
+    maxy=oldmaxy+maxscroll;
 end
 
