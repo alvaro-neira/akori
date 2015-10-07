@@ -1,5 +1,5 @@
 function [ gx, gy, maxy ] = getGaze( ini, fin, navini, navfin, maxx, oldmaxy, gaze_x, ...
-    gaze_y, xoffset, ts_gaze, ts_nav, scrollTop )
+    gaze_y, xoffset, yoffset, ts_gaze, ts_nav, scrollTop )
     if ~isvector(gaze_x)
         error('Argument 7 must be a vector')
     end
@@ -23,7 +23,7 @@ function [ gx, gy, maxy ] = getGaze( ini, fin, navini, navfin, maxx, oldmaxy, ga
   
     for i=1:size
         gx(i)=gaze_x(i+ini)+xoffset;
-        gy(i)=gaze_y(i+ini);
+        gy(i)=gaze_y(i+ini)+yoffset;
 %         if gx(i) < 1 || gy(i) < 1 || gx(i) > maxx + xoffset || gx(i) > maxy
 %             gx(i)=NaN;
 %             gy(i)=NaN;

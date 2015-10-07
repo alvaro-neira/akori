@@ -8,22 +8,22 @@ xoffsets=[0;];
 yoffsets=[120;];
 
 xoffsets(15)=0;
-yoffsets(15)=100;
+yoffsets(15)=-100;
 
 xoffsets(16)=0;
-yoffsets(16)=100;
+yoffsets(16)=-100;
 
 xoffsets(17)=0;
-yoffsets(17)=100;
+yoffsets(17)=-100;
 
 xoffsets(18)=0;
-yoffsets(18)=100;
+yoffsets(18)=-100;
 
 xoffsets(19)=140;
-yoffsets(19)=0;
+yoffsets(19)=-100;
 
 xoffsets(20)=40;
-yoffsets(20)=100;
+yoffsets(20)=-100;
 
 maxy=946;
 ms=1.157401129603386e-08;

@@ -1,3 +1,4 @@
+
 function [ output_args ] = gazeByQuestion( qid, ts_nav, ts_gaze, user_url, ...
     url_prefix, maxx, maxy, gaze_x, gaze_y, xoffset, yoffset, scrollTop, datapath )
     [id,url,pic]=findByPageId(qid);
@@ -51,7 +52,7 @@ function [ output_args ] = gazeByQuestion( qid, ts_nav, ts_gaze, user_url, ...
         end
     end
     [gx, gy, newmaxy]=getGaze(ini2, fin2, ini, fin, maxx, maxy, gaze_x, gaze_y, ...
-        xoffset, ts_gaze, ts_nav, scrollTop);
+        xoffset, yoffset, ts_gaze, ts_nav, scrollTop);
     
     plotimg(char(strcat(datapath,'pngs/')),maxx,newmaxy,pic,yoffset,gx,gy);   
 

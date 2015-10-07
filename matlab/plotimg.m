@@ -13,7 +13,7 @@ function [ output_args ] = plotimg( imgspath, maxx, maxy, picturename, yoffset,g
     image([0 maxx],[yoffset maxy],cutimage);
     hold on;
     plot(gx,gy,'o');
-    ylim([0 maxy]);
+    ylim([yoffset maxy]);
     xlim([0 maxx]);
     h = zoom;
     set(h,'Motion','vertical','Enable','on');
