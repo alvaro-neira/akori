@@ -17,6 +17,7 @@ function [ output_args ] = plotimg( imgspath, maxx, maxy, picturename, yoffset,g
     xlim([0 maxx]);
     h = zoom;
     set(h,'Motion','vertical','Enable','on');
-    maxy
+%     gx
+%     xlswrite('tuhermana.csv',gx);
 end
 

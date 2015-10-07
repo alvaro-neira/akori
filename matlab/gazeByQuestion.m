@@ -10,19 +10,37 @@ function [ output_args ] = gazeByQuestion( qid, ts_nav, ts_gaze, user_url, ...
     for i=1:length(ts_nav)
         if strcmp(user_url(i),strcat(url_prefix,url))
             found=1;
+            
             if i<ini
                 ini=i;
             end
-        elseif found
+            if i >= length(ts_nav)
+                fin=i;
+            end
+        elseif found 
             fin=i;
             break;
         
         end    
     end
-    
+    if ~found
+        error('ts_gaze not found');
+    end
+    if fin < ini
+        error('fin < ini');
+    end
     ini2=length(ts_gaze)+1;
     fin2=0;
+    
+%     length(ts_gaze)
+%     ts_nav(ini)
+%     length(ts_nav)
+%     ini 
+%     fin
     for i=1:length(ts_gaze)
+%         ts_gaze(i)
+%         ts_nav(ini)
+%         ts_nav(fin)
         if ts_gaze(i) >= ts_nav(ini) && ts_gaze(i) < ts_nav(fin)
             if i<ini2
                 ini2=i;

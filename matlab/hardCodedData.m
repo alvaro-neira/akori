@@ -6,6 +6,25 @@ coordinates_path='/Users/aneira/results/';
 url_prefix='file:///C:/Users/Gino/Desktop/websites/';
 xoffsets=[0;];
 yoffsets=[120;];
+
+xoffsets(15)=0;
+yoffsets(15)=100;
+
+xoffsets(16)=0;
+yoffsets(16)=100;
+
+xoffsets(17)=0;
+yoffsets(17)=100;
+
+xoffsets(18)=0;
+yoffsets(18)=100;
+
+xoffsets(19)=140;
+yoffsets(19)=0;
+
+xoffsets(20)=40;
+yoffsets(20)=100;
+
 maxy=946;
 ms=1.157401129603386e-08;
 lst=[
@@ -28,6 +47,7 @@ lst=[
 'suj17/sofey_20150710.122606.803479/vision.csv';
 'suj19/sofey_20150713.100245.473159/vision.csv';
 'suj20/sofey_20150714.125755.020633/vision.csv';
+'suj22/sofey_20151007.141717.712002/vision.csv';
 ];
 nav=[
 'suj1/sofey_browserdata_20150622.171405.491/navegacion.csv ';
@@ -49,6 +69,7 @@ nav=[
 'suj17/sofey_browserdata_20150710.130140.316/navegacion.csv';
 'suj19/sofey_browserdata_20150713.103756.244/navegacion.csv';
 'suj20/sofey_browserdata_20150714.132419.903/navegacion.csv';
+'suj22/sofey_browserdata_20151007.143255.680/navegacion.csv';
 ];
 questions=[
     'columbia_about';

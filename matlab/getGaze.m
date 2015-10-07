@@ -24,17 +24,17 @@ function [ gx, gy, maxy ] = getGaze( ini, fin, navini, navfin, maxx, oldmaxy, ga
     for i=1:size
         gx(i)=gaze_x(i+ini)+xoffset;
         gy(i)=gaze_y(i+ini);
-        if gx(i) < 1 || gy(i) < 1 || gx(i) > maxx || gx(i) > maxy
-            gx(i)=NaN;
-            gy(i)=NaN;
-            continue;
-        end
+%         if gx(i) < 1 || gy(i) < 1 || gx(i) > maxx + xoffset || gx(i) > maxy
+%             gx(i)=NaN;
+%             gy(i)=NaN;
+%             continue;
+%         end
         
         ts=ts_gaze(i+ini);
         
         for k=navini:navfin
             
-            if ts_nav(k)<=ts && ts_nav(k+1) >=ts
+            if ts_nav(k)<=ts && (k>=navfin || ts_nav(k+1) >=ts)
                 scroll=scrollTop(k);
                 if maxscroll<scroll
                     maxscroll=scroll;
