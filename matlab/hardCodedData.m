@@ -1,5 +1,6 @@
 function [ maxx, datapath, url_prefix, xoffsets, yoffsets, maxy, filelist, ...
-    filelist2,questionlist, ms, coordinates_path ] = hardCodedData( )
+    filelist2,questionlist, ms, coordinates_path, focusThreshold, minDepth, ...
+    maleWebsites,maleSubjects] = hardCodedData( )
 maxx=1920;
 datapath='/Users/aneira/lalo/data/';
 coordinates_path='/Users/aneira/results/';
@@ -27,6 +28,7 @@ yoffsets(20)=-100;
 
 maxy=946;
 ms=1.157401129603386e-08;
+focusThreshold=300;
 lst=[
 'suj1/sofey_20150622.171003.694091/vision.csv ';
 'suj2/sofey_20150623.151146.284899/vision.csv ';
@@ -82,5 +84,19 @@ questions=[
 filelist=cellstr(lst);
 filelist2=cellstr(nav);
 questionlist=cellstr(questions);
+minDepth=3;
+maleWebsitesaux=[
+    'gq_secuelas   ';
+    'gq_bitbite    ';
+    'gq_autos      ';
+    'wired         ';
+    'primer_battery';
+    'primer_beer   ';
+    % businessinsider missing
+    'werd_rides    ';
+    'uncrate_phones';
+    ];
+maleSubjects=[1;2;3;4;5;6;7;8;9;10;];
+maleWebsites=cellstr(maleWebsitesaux);
 end
 
