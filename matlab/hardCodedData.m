@@ -5,7 +5,7 @@ datapath='/Users/aneira/lalo/data/';
 coordinates_path='/Users/aneira/results/';
 url_prefix='file:///C:/Users/Gino/Desktop/websites/';
 xoffsets=[0;];
-yoffsets=[120;];
+yoffsets=[0;];
 
 xoffsets(15)=0;
 yoffsets(15)=-100;

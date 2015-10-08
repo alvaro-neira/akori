@@ -14,9 +14,11 @@ function [ gx, gy ] = userNavIntersection( userNumber, qid, ts_nav, ts_gaze, ...
     ini=length(ts_nav)+1;
     fin=0;
     found=0;
-   
+    
+  
     for i=1:length(ts_nav)
-        if strcmp(user_url,strcat(url_prefix,url))
+        
+        if strcmp(user_url(i),strcat(url_prefix,url))
             found=1;
             
             if i<ini
