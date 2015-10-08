@@ -1,4 +1,4 @@
-package akori;
+package cl.akori.main;
 
 import java.awt.Color;
 import java.awt.Font;

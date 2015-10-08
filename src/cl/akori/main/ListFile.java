@@ -4,9 +4,10 @@
  * and open the template in the editor.
  */
 
-package akori;
+package cl.akori.main;
 
-import static akori.Cluster2txt.listFilesForFolder;
+import static cl.akori.main.Cluster2txt.listFilesForFolder;
+
 import java.io.File;
 import java.util.ArrayList;
 

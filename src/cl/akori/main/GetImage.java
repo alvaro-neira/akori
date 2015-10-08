@@ -2,12 +2,10 @@ package cl.akori.main;
 
 import java.util.ArrayList;
 
-import akori.WebPage;
-
 public class GetImage {
 	public static final String RESULTS_PATH = "../results/";
     public static final String WEBSITES_PATH = "../websites/";
-    public static final String PICTURES_PATH = "./build/reports/tests/";
+    public static final String PICTURES_PATH = "/Users/aneira/lalo/data/pngs/";
     //Sorted by duration
 //    public static final String[] URLlist = {
 //    	"/ds_eggs/www.designsponge.com/2015/04/in-the-kitchen-with-marnie-andrea-and-jens-deviled-eggs.html", //2m7.147s

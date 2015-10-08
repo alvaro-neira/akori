@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package akori;
+package cl.akori.main;
 
 //import static akori.DrawLevel.namefile;
 import java.io.IOException;

@@ -1,8 +1,6 @@
 package cl.akori.main;
 
 import java.util.ArrayList;
-
-import akori.WebPage;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
