@@ -1,6 +1,6 @@
 function [ maxx, datapath, url_prefix, xoffsets, yoffsets, maxy, filelist, ...
     filelist2,questionlist, ms, coordinates_path, focusThreshold, minDepth, ...
-    maleWebsites,maleSubjects] = hardCodedData( )
+    maleWebsites,maleSubjects,femaleWebsites,femaleSubjects,neutralWebsites] = hardCodedData( )
 maxx=1920;
 datapath='/Users/aneira/lalo/data/';
 coordinates_path='/Users/aneira/results/';
@@ -92,11 +92,39 @@ maleWebsitesaux=[
     'wired         ';
     'primer_battery';
     'primer_beer   ';
-    % businessinsider missing
+    'bi_apps       '
     'werd_rides    ';
     'uncrate_phones';
     ];
+femaleWebsitesaux=[
+    'es_berlin    ';
+    'ds_eggs      ';
+    'ds_berlin    ';
+    'ds_london    ';
+    'ds_instagram ';
+    'ds_argentina ';
+    'enfem_diez   ';
+    'enfem_recetas';
+    'dc_manhattan ';
+   
+    ];
+neutralWebsitesaux=[
+    'science_cat   ';
+    %'science_mag   '; //missing
+    'columbia_about';
+    'columbia_adm  ';
+    'columbia_nobel';
+    'wharton_phd   ';
+    'emol_vino     ';
+    'wiki_pisco    ';
+    'wiki_paine    ';
+      
+    ];
+
+femaleWebsites=cellstr(femaleWebsitesaux);
 maleSubjects=[1;2;3;4;5;6;7;8;9;10;];
+femaleSubjects=[11;12;13;14;15;16;17;18;19;];
 maleWebsites=cellstr(maleWebsitesaux);
+neutralWebsites=cellstr(neutralWebsitesaux);
 end
 

@@ -28,7 +28,7 @@ function [ nviews, focuses ] = processObject( id, userx, usery, objectx, objecty
         else
             if inFocus
                 if (lastts-firstts)>=(focusThreshold*ms)
-                    focuses(fcounter)=lastts-firstts;
+                    focuses(fcounter,1)=(lastts-firstts)/ms;
                     fcounter=fcounter+1;
                 end
             end

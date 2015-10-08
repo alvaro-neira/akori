@@ -1,4 +1,5 @@
 function [node_name,x,y,width,height,depth,has_text,id,k,object_id] = importCoordinates(filename)
+
 %IMPORTFILE Import numeric data from a text file as column vectors.
 %   [NODE_NAME,X,Y,WIDTH,HEIGHT,DEPTH,HAS_TEXT,ID,K,OBJECT_ID] =
 %   IMPORTFILE(FILENAME) Reads data from text file FILENAME for the default
