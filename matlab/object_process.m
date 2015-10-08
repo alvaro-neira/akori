@@ -15,10 +15,11 @@ ts_nav=timestamp2double(timestamp2);
     importCoordinates(char(strcat(coordinates_path,coordinates_file)));
 [userx, usery]=userNavIntersection(userNumber,qid,ts_nav,ts_gaze,user_url, url_prefix, gaze_x,gaze_y);
 for i=1:length(object_id)
+    
     [nviews]=processObject(userx,usery,x(i),y(i),width(i),height(i),xoffsets(userNumber),yoffsets(userNumber));
-    if nviews>1
-        object_id(i)
-%         nviews
+    if depth(i)>=10 && nviews>1
+          object_id(i)
+          nviews
     end
  
 end

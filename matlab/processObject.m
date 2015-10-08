@@ -4,6 +4,7 @@ function [ nviews ] = processObject( userx, usery, objectx, objecty, width, heig
     end
     nviews=0;
     for i=1:length(userx)
+%         i
         if isInside(userx(i),usery(i),objectx, objecty, width, height, offsetx, offsety )
             nviews=nviews+1;
         end

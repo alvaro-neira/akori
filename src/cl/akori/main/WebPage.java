@@ -35,7 +35,8 @@ public class WebPage {
 
     public static final String RESULTS_PATH = "../results/";
     public static final String WEBSITES_PATH = "../websites/";
-    public static final String PICTURES_PATH = "./build/reports/tests/";
+    public static final String PICTURES_PATH = "/Users/aneira/lalo/data/pngs/";
+    public static final String PICTURES_PATH1 = "./build/reports/tests/";
     public static final Integer MAX_DEPTH = 100;
 
     private String uri;
@@ -123,8 +124,8 @@ public class WebPage {
             System.out.println("About to read "+fileName);
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
             Integer fileMaxDepth = getMaxDepthFromfile(fileName);
-            int[] conteo = new int[fileMaxDepth];
-            BufferedImage img = ImageIO.read(new File(PICTURES_PATH + name + ".png"));
+//            int[] conteo = new int[fileMaxDepth];
+            BufferedImage img = ImageIO.read(new File(PICTURES_PATH + "columbia_about" + ".png"));
             Graphics2D graph = img.createGraphics();
             graph.setColor(Color.RED);
 //            graph.setFont(	);
@@ -136,19 +137,23 @@ public class WebPage {
             ArrayList<String> elementsGraphed = new ArrayList<>();
             String line = reader.readLine(); //header
             line = reader.readLine();
+            System.out.println("fileMaxDepth="+fileMaxDepth);
             while (line != null) {
                 String[] aux = line.split(",");
-                conteo[Integer.parseInt(aux[5]) - 1]++;
-                if (Integer.parseInt(aux[5]) < fileMaxDepth && conteo[Integer.parseInt(aux[5]) - 1] > conteo[Integer.parseInt(aux[5])]) {
-                    int x = Integer.parseInt(aux[1]);
-                    int y = Integer.parseInt(aux[2]);
-                    int w = Integer.parseInt(aux[3]);
-                    int h = Integer.parseInt(aux[4]);
-
-                    graph.draw(new Rectangle(x, y, w, h));
-                    String id = aux[9];
-                    graph.drawString(id, x, y + fontSize - 1);
-                    elementsGraphed.add(line);
+                Integer depth=Integer.parseInt(aux[5]);
+                if(depth>=Math.max(0,fileMaxDepth-19)){
+                
+	//                conteo[Integer.parseInt(aux[5]) - 1]++;
+	//                if (Integer.parseInt(aux[5]) <= fileMaxDepth && conteo[Integer.parseInt(aux[5]) - 1] > conteo[Integer.parseInt(aux[5])]) {
+	                int x = Integer.parseInt(aux[1]);
+	                int y = Integer.parseInt(aux[2]);
+	                int w = Integer.parseInt(aux[3]);
+	                int h = Integer.parseInt(aux[4]);	
+	
+	                graph.draw(new Rectangle(x, y, w, h));
+	                String id = aux[9];
+	                graph.drawString(id, x, y + fontSize - 1);
+	                elementsGraphed.add(line);
                 }
                 line = reader.readLine();
             }

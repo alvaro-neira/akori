@@ -52,24 +52,14 @@ function [ gx, gy ] = userNavIntersection( userNumber, qid, ts_nav, ts_gaze, ...
             end
         end
     end
-   
-%     if ~isvector(ts_gaze)
-%         error('Argument 10 must be a vector')
-%     end
-%     if ~isvector(ts_nav)
-%         error('Argument 11 must be a vector')
-%     end
-%     if ~isvector(scrollTop)
-%         error('Argument 12 must be a vector')
-%     end
-    size=fin+1-ini;
+
+    size=fin2+1-ini2;
     gx=zeros(size,1);
     gy=zeros(size,1);
-%     maxy=oldmaxy;
   
     for i=1:size
-        gx(i)=gaze_x(i+ini);
-        gy(i)=gaze_y(i+ini);       
+        gx(i)=gaze_x(i+ini2);
+        gy(i)=gaze_y(i+ini2);       
     end
     
 end
