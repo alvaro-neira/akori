@@ -125,7 +125,7 @@ public class WebPage {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
             Integer fileMaxDepth = getMaxDepthFromfile(fileName);
 //            int[] conteo = new int[fileMaxDepth];
-            BufferedImage img = ImageIO.read(new File(PICTURES_PATH + "columbia_about" + ".png"));
+            BufferedImage img = ImageIO.read(new File(PICTURES_PATH + "enfem_diez" + ".png"));
             Graphics2D graph = img.createGraphics();
             graph.setColor(Color.RED);
 //            graph.setFont(	);
@@ -136,12 +136,12 @@ public class WebPage {
 
             ArrayList<String> elementsGraphed = new ArrayList<>();
             String line = reader.readLine(); //header
-            line = reader.readLine();
+            line = reader.readLine();	
             System.out.println("fileMaxDepth="+fileMaxDepth);
             while (line != null) {
                 String[] aux = line.split(",");
                 Integer depth=Integer.parseInt(aux[5]);
-                if(depth>=Math.max(0,fileMaxDepth-19)){
+                if(depth==Math.max(0,fileMaxDepth-12)){
                 
 	//                conteo[Integer.parseInt(aux[5]) - 1]++;
 	//                if (Integer.parseInt(aux[5]) <= fileMaxDepth && conteo[Integer.parseInt(aux[5]) - 1] > conteo[Integer.parseInt(aux[5])]) {

@@ -32,16 +32,9 @@ function [ output_args ] = gazeByQuestion( qid, ts_nav, ts_gaze, user_url, ...
     end
     ini2=length(ts_gaze)+1;
     fin2=0;
-    
-%     length(ts_gaze)
-%     ts_nav(ini)
-%     length(ts_nav)
-%     ini 
-%     fin
+ 
     for i=1:length(ts_gaze)
-%         ts_gaze(i)
-%         ts_nav(ini)
-%         ts_nav(fin)
+
         if ts_gaze(i) >= ts_nav(ini) && ts_gaze(i) < ts_nav(fin)
             if i<ini2
                 ini2=i;
@@ -51,9 +44,10 @@ function [ output_args ] = gazeByQuestion( qid, ts_nav, ts_gaze, user_url, ...
             end
         end
     end
-    [gx, gy, newmaxy]=getGaze(ini2, fin2, ini, fin, maxx, maxy, gaze_x, gaze_y, ...
-        xoffset, yoffset, ts_gaze, ts_nav, scrollTop);
-    
+    [gx, gyaux]=getGaze(ini2, fin2, ini, fin, gaze_x, gaze_y, ...
+        xoffset, yoffset, ts_gaze, ts_nav);
+    [ gy, maxscroll ] = scrollAdjust(  gyaux, scrollTop, ts_gaze, ts_nav, ini2, ini, fin )
+    newmaxy=maxy+maxscroll;
     plotimg(char(strcat(datapath,'pngs/')),maxx,newmaxy,pic,yoffset,gx,gy);   
 
 

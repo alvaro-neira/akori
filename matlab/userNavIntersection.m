@@ -1,5 +1,5 @@
-% This function doesn't consider offsets neither scroll
-function [ gx, gy ] = userNavIntersection( userNumber, qid, ts_nav, ts_gaze, ...
+% This function doesn't consider scroll
+function [ gx, gy, ini2, ini, fin ] = userNavIntersection( userNumber, qid, ts_nav, ts_gaze, ...
     user_url, url_prefix, gaze_x,gaze_y )
     if ~isvector(gaze_x)
         error('Argument must be a vector')
