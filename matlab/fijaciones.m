@@ -1,22 +1,22 @@
-
 [ maxx, datapath, url_prefix, xoffsets, yoffsets, maxy, filelist, ...
-    filelist2,questionlist, ms, coordinates_path, focusThreshold, minDepth, ...
-    maleWebsites, maleSubjects, femaleWebsites,femaleSubjects,neutralWebsites] = hardCodedData( );
-% totalFocuses=[];
+    filelist2,questionlist, ms, coordinates_path, focusThreshold, ...
+    minDepth, maleWebsites, maleSubjects, femaleWebsites,...
+    femaleSubjects,neutralWebsites,allSubjects, allWebsites] = hardCodedData( );
+
 totalFocusesCounter=1;
-% avgFocuses=[];
+totalFocuses=0;
 avgFocusesCounter=1;
-% avgFocusesDuration=[];
+
 avgFocusesDurationCounter=1;
-res=[];
-for s=1: length(maleSubjects)
-    userNumber=maleSubjects(s);
+
+for s=1: length(allSubjects)
+    userNumber=allSubjects(s);
     userFocuses=[];
     userFocusesCounter=1;
     
-   for k=1:length(femaleWebsites)
+   for k=1:length(allWebsites)
         
-        qid=femaleWebsites(k);
+        qid=allWebsites(k);
 
         [page_id,url,picture,coordinates_file] = findByPageId(qid);
         filename = strcat(datapath,char(filelist(userNumber)));
@@ -49,12 +49,26 @@ for s=1: length(maleSubjects)
         end
         
     end
-    res(totalFocusesCounter,1)=length(userFocuses); %totalfocuses
-    totalFocusesCounter=totalFocusesCounter+1;
-    res(avgFocusesCounter,2)=length(userFocuses)/length(femaleWebsites); %average per page
-    avgFocusesCounter=avgFocusesCounter+1;
-    res(avgFocusesDurationCounter,3)=mean(userFocuses) %average per page
-    avgFocusesDurationCounter=avgFocusesDurationCounter+1;
-    
+    totalFocuses=totalFocuses+length(userFocuses) 
+     
 end
+focusThreshold
+totalFocuses
+res=[200 114927;
+    300 91417;
+    350 81838;
+    400 74108;
+    450 67367;
+    500 61428;
+    550 56404;
+600 52023;
+700 45085;
+800 39171;
+900 34607;
+1000 30739;
+1100 27466;
+1500 18999;
+2000 13006;
+3000 7303;
+]
 %xlswrite('tuhermana.csv',res);

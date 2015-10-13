@@ -1,12 +1,16 @@
-function [ maxx, datapath, url_prefix, xoffsets, yoffsets, maxy, filelist, ...
-    filelist2,questionlist, ms, coordinates_path, focusThreshold, minDepth, ...
-    maleWebsites,maleSubjects,femaleWebsites,femaleSubjects,neutralWebsites] = hardCodedData( )
+function [ maxx, datapath, url_prefix, xoffsets, yoffsets, maxy, ...
+    filelist, filelist2,questionlist, ms, coordinates_path, ...
+    focusThreshold, minDepth, maleWebsites,maleSubjects,femaleWebsites,...
+    femaleSubjects,neutralWebsites,allSubjects, allWebsites] = hardCodedData( )
 maxx=1920;
 datapath='/Users/aneira/lalo/data/';
 coordinates_path='/Users/aneira/results/';
 url_prefix='file:///C:/Users/Gino/Desktop/websites/';
-xoffsets=[0;];
-yoffsets=[0;];
+xoffsets=zeros(20,1);
+yoffsets=zeros(20,1);
+for os=1:length(yoffsets)
+    yoffsets(os)=-100;
+end
 
 xoffsets(15)=0;
 yoffsets(15)=-100;
@@ -28,7 +32,7 @@ yoffsets(20)=-100;
 
 maxy=946;
 ms=1.157401129603386e-08;
-focusThreshold=300;
+focusThreshold=200;
 lst=[
 'suj1/sofey_20150622.171003.694091/vision.csv ';
 'suj2/sofey_20150623.151146.284899/vision.csv ';
@@ -120,11 +124,43 @@ neutralWebsitesaux=[
     'wiki_paine    ';
       
     ];
+allWebsitesAux=[
+    'gq_secuelas   ';
+    'gq_bitbite    ';
+    'gq_autos      ';
+    'wired         ';
+    'primer_battery';
+    'primer_beer   ';
+    'bi_apps       '
+    'werd_rides    ';
+    'uncrate_phones';
+    'es_berlin     ';
+    'ds_eggs       ';
+    'ds_berlin     ';
+    'ds_london     ';
+    'ds_instagram  ';
+    'ds_argentina  ';
+    'enfem_diez    ';
+    'enfem_recetas ';
+    'dc_manhattan  ';
+    'science_cat   ';
+    %'science_mag   '; //missing
+    'columbia_about';
+    'columbia_adm  ';
+    'columbia_nobel';
+    'wharton_phd   ';
+    'emol_vino     ';
+    'wiki_pisco    ';
+    'wiki_paine    ';
+];
 
-femaleWebsites=cellstr(femaleWebsitesaux);
 maleSubjects=[1;2;3;4;5;6;7;8;9;10;];
 femaleSubjects=[11;12;13;14;15;16;17;18;19;];
+allSubjects=[1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;];
+
 maleWebsites=cellstr(maleWebsitesaux);
 neutralWebsites=cellstr(neutralWebsitesaux);
+femaleWebsites=cellstr(femaleWebsitesaux);
+allWebsites=cellstr(allWebsitesAux);
 end
 

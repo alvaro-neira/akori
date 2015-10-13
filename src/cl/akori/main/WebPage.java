@@ -118,14 +118,14 @@ public class WebPage {
 
     public void getPng() {
         try {
-            getJsoupDoc(uri, true);
-            Selenide.screenshot(name);
+//            getJsoupDoc(uri, true);
+//            Selenide.screenshot(name);
             String fileName=RESULTS_PATH + name + ".csv";
             System.out.println("About to read "+fileName);
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
             Integer fileMaxDepth = getMaxDepthFromfile(fileName);
 //            int[] conteo = new int[fileMaxDepth];
-            BufferedImage img = ImageIO.read(new File(PICTURES_PATH + "enfem_diez" + ".png"));
+            BufferedImage img = ImageIO.read(new File(PICTURES_PATH + "science_mag" + ".png"));
             Graphics2D graph = img.createGraphics();
             graph.setColor(Color.RED);
 //            graph.setFont(	);
@@ -141,7 +141,7 @@ public class WebPage {
             while (line != null) {
                 String[] aux = line.split(",");
                 Integer depth=Integer.parseInt(aux[5]);
-                if(depth==Math.max(0,fileMaxDepth-12)){
+//                if(depth==Math.max(0,fileMaxDepth-12)){
                 
 	//                conteo[Integer.parseInt(aux[5]) - 1]++;
 	//                if (Integer.parseInt(aux[5]) <= fileMaxDepth && conteo[Integer.parseInt(aux[5]) - 1] > conteo[Integer.parseInt(aux[5])]) {
@@ -154,7 +154,7 @@ public class WebPage {
 	                String id = aux[9];
 	                graph.drawString(id, x, y + fontSize - 1);
 	                elementsGraphed.add(line);
-                }
+//                }
                 line = reader.readLine();
             }
             graph.dispose();

@@ -48,7 +48,7 @@ function [ output_args ] = gazeByQuestion( qid, ts_nav, ts_gaze, user_url, ...
         xoffset, yoffset, ts_gaze, ts_nav);
     [ gy, maxscroll ] = scrollAdjust(  gyaux, scrollTop, ts_gaze, ts_nav, ini2, ini, fin )
     newmaxy=maxy+maxscroll;
-    plotimg(char(strcat(datapath,'pngs/')),maxx,newmaxy,pic,yoffset,gx,gy);   
+%     plotimg(char(strcat(datapath,'pngs/')),maxx,newmaxy,pic,yoffset,gx,gy);   
 
 
 end
