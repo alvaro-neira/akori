@@ -1,7 +1,7 @@
 function [ maxx, datapath, url_prefix, xoffsets, yoffsets, maxy, ...
     filelist, filelist2,questionlist, ms, coordinates_path, ...
     focusThreshold, minDepth, maleWebsites,maleSubjects,femaleWebsites,...
-    femaleSubjects,neutralWebsites,allSubjects, allWebsites] = hardCodedData( )
+    femaleSubjects,neutralWebsites,allSubjects, allWebsites, eeglist] = hardCodedData( )
 addpath internal;
 maxx=1920;
 datapath='/Users/aneira/lalo/data/';
@@ -54,6 +54,7 @@ lst=[
 'suj17/sofey_20150710.122606.803479/vision.csv';
 'suj19/sofey_20150713.100245.473159/vision.csv';
 'suj20/sofey_20150714.125755.020633/vision.csv';
+'NONE                                         ';
 'suj22/sofey_20151007.141717.712002/vision.csv';
 ];
 nav=[
@@ -76,8 +77,32 @@ nav=[
 'suj17/sofey_browserdata_20150710.130140.316/navegacion.csv';
 'suj19/sofey_browserdata_20150713.103756.244/navegacion.csv';
 'suj20/sofey_browserdata_20150714.132419.903/navegacion.csv';
+'NONE                                                      ';
 'suj22/sofey_browserdata_20151007.143255.680/navegacion.csv';
 ];
+eeg_aux=[
+    'suj1/lalo1-lalo1-22.06.15.17.13.43.edf   ';
+'suj2/lalo2-lalo2-23.06.15.15.16.34.edf   ';
+'suj3/lalo3-lalo3-23.06.15.17.13.19.edf   ';
+'suj4/lalo4-lalo4-24.06.15.15.43.41.edf   ';
+'suj5/lalo5-lalo5-25.06.15.13.34.03.edf   ';
+'suj6/6-6-25.06.15.18.34.33.edf           ';
+'suj7/lalo7-lalo7-26.06.15.11.39.56.edf   ';
+'NONE                                     ';
+'suj9/lalo9-lalo9-30.06.15.15.19.42.edf   ';
+'suj10/lalo10-lalo10-01.07.15.12.28.08.edf';
+'suj11/lalo11-lalo11-01.07.15.14.23.21.edf';
+'suj12/lalo12-lalo12-02.07.15.10.50.30.edf';
+'suj13/lalo13-lalo13-02.07.15.14.33.39.edf';
+'suj14/lalo14-lalo14-02.07.15.17.24.39.edf';
+'suj15/lalo15-lalo15-08.07.15.16.03.51.edf';
+'suj16/lalo16-lalo16-10.07.15.10.39.18.edf';
+'suj17/lalo17-lalo17-10.07.15.13.01.30.edf';
+'suj19/lalo19-lalo19-13.07.15.10.37.46.edf';
+'suj20/lalo20-lalo20-14.07.15.13.24.10.edf';
+'suj18/lalo18-lalo18-10.07.15.15.36.23.edf';
+];
+eeglist=cellstr(eeg_aux);
 questions=[
     'columbia_about';
     'ds_eggs       ';

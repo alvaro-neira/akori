@@ -6,7 +6,7 @@ rect=zeros(100,4);
 
 rectangleCounter=1;
 rownumber=1;
-while rownumber<=height && ~exitOuterLoop
+while rownumber<=height 
    for columnnumber=1:width
        
         pix=B(columnnumber,rownumber);
