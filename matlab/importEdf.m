@@ -4,6 +4,9 @@
 % EEG.chanlocs(3).labels
 
 function [ ts, o1, o2 ] = importEdf( filename )
+    if ~exist(filename, 'file')
+        error('edf file does not exist');
+    end
     EEG = pop_biosig(filename);
     ts=transpose(EEG.times);
     eeg=transpose(EEG.data);

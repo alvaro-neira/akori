@@ -1,7 +1,8 @@
 function [ maxx, datapath, url_prefix, xoffsets, yoffsets, maxy, ...
     filelist, filelist2,questionlist, ms, coordinates_path, ...
     focusThreshold, minDepth, maleWebsites,maleSubjects,femaleWebsites,...
-    femaleSubjects,neutralWebsites,allSubjects, allWebsites, eeglist] = hardCodedData( )
+    femaleSubjects,neutralWebsites,allSubjects, allWebsites, eeglist, ...
+    eegStartTimes] = hardCodedData( )
 addpath internal;
 maxx=1920;
 datapath='/Users/aneira/lalo/data/';
@@ -102,6 +103,29 @@ eeg_aux=[
 'suj20/lalo20-lalo20-14.07.15.13.24.10.edf';
 'suj18/lalo18-lalo18-10.07.15.15.36.23.edf';
 ];
+eegStartTimes=[
+   
+    datenum('20150622.171343.164497','yyyymmdd.HHMMSS.FFF');
+    datenum('20150623.151634.741070','yyyymmdd.HHMMSS.FFF');
+    datenum('20150623.171319.591115','yyyymmdd.HHMMSS.FFF');
+    datenum('20150624.154341.698938','yyyymmdd.HHMMSS.FFF');
+    datenum('20150625.133403.367263','yyyymmdd.HHMMSS.FFF');
+datenum('20150625.183433.922126','yyyymmdd.HHMMSS.FFF');
+datenum('20150626.113956.483999','yyyymmdd.HHMMSS.FFF');
+0.0;
+datenum('20150630.151942.870924','yyyymmdd.HHMMSS.FFF');
+datenum('20150701.122808.655676','yyyymmdd.HHMMSS.FFF');
+datenum('20150701.142321.693212','yyyymmdd.HHMMSS.FFF');
+datenum('20150702.105030.922792','yyyymmdd.HHMMSS.FFF');
+datenum('20150702.143339.776590','yyyymmdd.HHMMSS.FFF');
+datenum('20150702.172439.793095','yyyymmdd.HHMMSS.FFF');
+datenum('20150708.160351.955038','yyyymmdd.HHMMSS.FFF');
+datenum('20150710.103919.051698','yyyymmdd.HHMMSS.FFF');
+datenum('20150710.130130.888433','yyyymmdd.HHMMSS.FFF');
+datenum('20150713.103746.401921','yyyymmdd.HHMMSS.FFF');
+datenum('20150714.132410.321490','yyyymmdd.HHMMSS.FFF');
+datenum('20150710.153623.500000','yyyymmdd.HHMMSS.FFF'); %milliseconds are invented
+    ];
 eeglist=cellstr(eeg_aux);
 questions=[
     'columbia_about';
