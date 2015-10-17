@@ -35,7 +35,8 @@ public class WebPage {
 
     public static final String RESULTS_PATH = "../results/";
     public static final String WEBSITES_PATH = "../websites/";
-    public static final String PICTURES_PATH = "/Users/aneira/lalo/data/pngs/";
+    public static final String CSVS_PATH = "/Users/aneira/akori/coordinates_csvs/";
+    public static final String PICTURES_PATH = "/Users/aneira/data/pngs/";
     public static final String PICTURES_PATH1 = "./build/reports/tests/";
     public static final Integer MAX_DEPTH = 100;
 
@@ -118,14 +119,13 @@ public class WebPage {
 
     public void getPng() {
         try {
-//            getJsoupDoc(uri, true);
-//            Selenide.screenshot(name);
-            String fileName=RESULTS_PATH + name + ".csv";
-            System.out.println("About to read "+fileName);
+            String fileName=CSVS_PATH + name + ".csv";
+            System.out.println("About to read csv "+fileName);
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
             Integer fileMaxDepth = getMaxDepthFromfile(fileName);
-//            int[] conteo = new int[fileMaxDepth];
-            BufferedImage img = ImageIO.read(new File(PICTURES_PATH + "science_mag" + ".png"));
+            String imgName=PICTURES_PATH + this.name + ".png";
+            System.out.println("About to read png "+imgName);
+            BufferedImage img = ImageIO.read(new File(imgName));
             Graphics2D graph = img.createGraphics();
             graph.setColor(Color.RED);
 //            graph.setFont(	);

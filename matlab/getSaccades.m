@@ -36,7 +36,7 @@ function [ res ] = getSaccades( subjects, websites )
         end
         res(c,1)=saccadeCounter;
         res(c,2)=saccadeCounter/length(websites);
-        res
+        
         c=c+1;
     end
 end

@@ -2,7 +2,7 @@
 function [ nviews, focuses ] = processObject( id, userx, usery, objectx, objecty, width, ...
     height, offsetx, offsety, ts_gaze, ini )
 [ maxx, datapath, url_prefix, xoffsets, yoffsets, maxy, filelist, ...
-    filelist2,questionlist, ms, coordinates_path, focusThreshold ] = hardCodedData( );
+    filelist2,questionlist, ms, deprecated1, focusThreshold ] = hardCodedData( );
 
     if ~isvector(userx) || ~isvector(usery) || ~isvector(ts_gaze)
         error('Input must be a vector')

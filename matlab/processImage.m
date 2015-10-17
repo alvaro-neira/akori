@@ -1,6 +1,6 @@
-B1=imread('/Users/aneira/lalo/data/pngs/science_mag_mask.bmp');
+B1=imread('/Users/aneira/data/pngs/science_cat_mask.bmp');
 B=transpose(B1(:,:,1));
-%     image(B)
+     image(B)
 [width height dim]=size(B);
 rect=zeros(100,4);
 

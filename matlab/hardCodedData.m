@@ -1,13 +1,18 @@
 function [ maxx, datapath, url_prefix, xoffsets, yoffsets, maxy, ...
-    filelist, filelist2,questionlist, ms, coordinates_path, ...
+    filelist, filelist2,questionlist, ms, deprecated1, ...
     focusThreshold, minDepth, maleWebsites,maleSubjects,femaleWebsites,...
     femaleSubjects,neutralWebsites,allSubjects, allWebsites, eeglist, ...
-    eegStartTimes] = hardCodedData( )
+    eegStartTimes, deprecated2, deprecated3, coordinates_csvs] = hardCodedData( )
 addpath internal;
 maxx=1920;
-datapath='/Users/aneira/lalo/data/';
-coordinates_path='/Users/aneira/results/';
+datapath='/Users/aneira/data/';
+deprecated1='NONE';
+deprecated2='NONE';
+deprecated3='NONE';
+
+% new_objects_path='/Users/aneira/lalo/Objetos finales/';
 url_prefix='file:///C:/Users/Gino/Desktop/websites/';
+coordinates_csvs='/Users/aneira/akori/coordinates_csvs/';
 xoffsets=zeros(20,1);
 yoffsets=zeros(20,1);
 for os=1:length(yoffsets)
@@ -127,14 +132,33 @@ datenum('20150714.132410.321490','yyyymmdd.HHMMSS.FFF');
 datenum('20150710.153623.500000','yyyymmdd.HHMMSS.FFF'); %milliseconds are invented
     ];
 eeglist=cellstr(eeg_aux);
-questions=[
-    'columbia_about';
-    'ds_eggs       ';
-    'ds_instagram  ';
-    'ds_london     ';
-    'enfem_diez    ';
+questions=[ %sorted 
+'bi_apps       ';
+'columbia_about';
+'columbia_adm  ';
+'columbia_nobel';
+'ds_argentina  ';
+'ds_berlin     ';
+'ds_eggs       ';
+'ds_instagram  ';
+'ds_london     ';
+'emol_vino     ';
+'enfemDiez     ';
+'enfemRecetas  ';
+'es_berlin     ';
+'gq_autos      ';
+'gq_bit        ';
+'gq_secuelas   ';
+'primer_battery';
+'primer_beer   ';
+'uncrate_phones';
+'werd_rides    ';
+'wharton_phd   ';
+'wiki_paine    ';
+'wiki_pisco    ';
+'wired_note    ';
     ];
-    
+
 filelist=cellstr(lst);
 filelist2=cellstr(nav);
 questionlist=cellstr(questions);

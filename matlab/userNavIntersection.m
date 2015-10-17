@@ -34,7 +34,9 @@ function [ gx, gy, ini2, ini, fin ] = userNavIntersection( userNumber, qid, ts_n
         end    
     end
     if ~found
-        error('Intersection not found');
+        userNumber
+        qid
+        error(strcat('Intersection not found. User number:?',',page id:?'));
     end
     if fin < ini
         error('fin < ini');
