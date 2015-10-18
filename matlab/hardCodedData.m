@@ -1,20 +1,23 @@
 function [ maxx, datapath, url_prefix, xoffsets, yoffsets, maxy, ...
-    deprecated6, filelist2,questionlist, ms, deprecated1, ...
+    deprecated6, deprecated7,questionlist, ms, deprecated1, ...
     deprecated5, deprecated4, maleWebsites,maleSubjects,femaleWebsites,...
     femaleSubjects,neutralWebsites,allSubjects, allWebsites, eeglist, ...
-    eegStartTimes, deprecated2, deprecated3, coordinates_csvs, vision_csvs] = hardCodedData( )
-addpath internal;
+    eegStartTimes, deprecated2, deprecated3, coordinates_csvs, vision_csvs, ...
+    nav_csvs] = hardCodedData( )
+% addpath internal;
 % minDepth=3;
 % focusThreshold=300;
 maxx=1920;
 datapath='/Users/aneira/data/';
 vision_csvs='/Users/aneira/data/vision_csvs/';
+nav_csvs='/Users/aneira/data/nav_csvs/';
 deprecated1='NONE';
 deprecated2='NONE';
 deprecated3='NONE';
 deprecated4='NONE';
 deprecated5='NONE';
 deprecated6='NONE';
+deprecated7='NONE';
 
 
 % new_objects_path='/Users/aneira/lalo/Objetos finales/';
@@ -70,29 +73,29 @@ ms=1.157401129603386e-08;
 % 'NONE                                         ';
 % 'suj22/sofey_20151007.141717.712002/vision.csv';
 % ];
-nav=[
-'suj1/sofey_browserdata_20150622.171405.491/navegacion.csv ';
-'suj2/sofey_browserdata_20150623.151646.478/navegacion.csv ';
-'suj3/sofey_browserdata_20150623.171333.420/navegacion.csv ';
-'suj4/sofey_browserdata_20150624.154353.349/navegacion.csv ';
-'suj5/sofey_browserdata_20150625.133416.245/navegacion.csv ';
-'suj6/sofey_browserdata_20150625.183445.901/navegacion.csv ';
-'suj7/sofey_browserdata_20150626.114008.736/navegacion.csv ';
-'suj8/sofey_browserdata_20150626.132830.903/navegacion.csv ';
-'suj9/sofey_browserdata_20150630.152003.317/navegacion.csv ';
-'suj10/sofey_browserdata_20150701.122829.871/navegacion.csv';
-'suj11/sofey_browserdata_20150701.142332.043/navegacion.csv';
-'suj12/sofey_browserdata_20150702.105035.551/navegacion.csv';
-'suj13/sofey_browserdata_20150702.143358.912/navegacion.csv';
-'suj14/sofey_browserdata_20150702.172444.235/navegacion.csv';
-'suj15/sofey_browserdata_20150708.160401.530/navegacion.csv';
-'suj16/sofey_browserdata_20150710.103942.244/navegacion.csv';
-'suj17/sofey_browserdata_20150710.130140.316/navegacion.csv';
-'suj19/sofey_browserdata_20150713.103756.244/navegacion.csv';
-'suj20/sofey_browserdata_20150714.132419.903/navegacion.csv';
-'NONE                                                      ';
-'suj22/sofey_browserdata_20151007.143255.680/navegacion.csv';
-];
+% nav=[
+% 'suj1/sofey_browserdata_20150622.171405.491/navegacion.csv ';
+% 'suj2/sofey_browserdata_20150623.151646.478/navegacion.csv ';
+% 'suj3/sofey_browserdata_20150623.171333.420/navegacion.csv ';
+% 'suj4/sofey_browserdata_20150624.154353.349/navegacion.csv ';
+% 'suj5/sofey_browserdata_20150625.133416.245/navegacion.csv ';
+% 'suj6/sofey_browserdata_20150625.183445.901/navegacion.csv ';
+% 'suj7/sofey_browserdata_20150626.114008.736/navegacion.csv ';
+% 'suj8/sofey_browserdata_20150626.132830.903/navegacion.csv ';
+% 'suj9/sofey_browserdata_20150630.152003.317/navegacion.csv ';
+% 'suj10/sofey_browserdata_20150701.122829.871/navegacion.csv';
+% 'suj11/sofey_browserdata_20150701.142332.043/navegacion.csv';
+% 'suj12/sofey_browserdata_20150702.105035.551/navegacion.csv';
+% 'suj13/sofey_browserdata_20150702.143358.912/navegacion.csv';
+% 'suj14/sofey_browserdata_20150702.172444.235/navegacion.csv';
+% 'suj15/sofey_browserdata_20150708.160401.530/navegacion.csv';
+% 'suj16/sofey_browserdata_20150710.103942.244/navegacion.csv';
+% 'suj17/sofey_browserdata_20150710.130140.316/navegacion.csv';
+% 'suj19/sofey_browserdata_20150713.103756.244/navegacion.csv';
+% 'suj20/sofey_browserdata_20150714.132419.903/navegacion.csv';
+% 'NONE                                                      ';
+% 'suj22/sofey_browserdata_20151007.143255.680/navegacion.csv';
+% ];
 eeg_aux=[
     'suj1/lalo1-lalo1-22.06.15.17.13.43.edf   ';
 'suj2/lalo2-lalo2-23.06.15.15.16.34.edf   ';
@@ -167,7 +170,7 @@ questions=[ %sorted
     ];
 
 %filelist=cellstr(lst);
-filelist2=cellstr(nav);
+% filelist2=cellstr(nav);
 questionlist=cellstr(questions);
 
 maleWebsitesaux=[

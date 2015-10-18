@@ -5,10 +5,10 @@
     eegStartTimes, deprecated2, deprecated3, coordinates_csvs] = hardCodedData( );
 
 
-focusThreshold=1100;
+focusThreshold=100;
 rescounter=1;
 res=[];
-while focusThreshold<=1500
+while focusThreshold<=500
     nfocuses=getNFocuses(allSubjects,allWebsites,focusThreshold);
     res(rescounter,1)=focusThreshold;
     res(rescounter,2)=nfocuses;
