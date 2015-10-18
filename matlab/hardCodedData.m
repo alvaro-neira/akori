@@ -1,9 +1,26 @@
-function [ maxx, datapath, url_prefix, xoffsets, yoffsets, maxy, ...
-    deprecated6, deprecated7,questionlist, ms, deprecated1, ...
-    deprecated5, deprecated4, maleWebsites,maleSubjects,femaleWebsites,...
-    femaleSubjects,neutralWebsites,allSubjects, allWebsites, eeglist, ...
-    eegStartTimes, deprecated2, deprecated3, coordinates_csvs, vision_csvs, ...
-    nav_csvs] = hardCodedData( )
+function [ retval ] = hardCodedData( )
+global maxx;
+global datapath;
+global url_prefix;
+global xoffsets;
+global yoffsets;
+global maxy;
+
+global questionlist;
+global ms;
+global maleWebsites;
+global maleSubjects;
+global femaleWebsites;
+global femaleSubjects;
+global neutralWebsites;
+global allSubjects;
+global allWebsites;
+global eeglist;
+global eegStartTimes;
+global coordinates_csvs;
+global vision_csvs;
+global nav_csvs;
+
 % addpath internal;
 % minDepth=3;
 % focusThreshold=300;

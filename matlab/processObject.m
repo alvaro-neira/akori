@@ -1,8 +1,27 @@
 
 function [ focuses ] = processObject( id, userx, usery, objectx, objecty, width, ...
     height, offsetx, offsety, ts_gaze, ini, focusThreshold )
-[ maxx, datapath, url_prefix, xoffsets, yoffsets, maxy, filelist, ...
-    filelist2,questionlist, ms, deprecated1, deprecated5 ] = hardCodedData( );
+global maxx;
+global datapath;
+global url_prefix;
+global xoffsets;
+global yoffsets;
+global maxy;
+
+global questionlist;
+global ms;
+global maleWebsites;
+global maleSubjects;
+global femaleWebsites;
+global femaleSubjects;
+global neutralWebsites;
+global allSubjects;
+global allWebsites;
+global eeglist;
+global eegStartTimes;
+global coordinates_csvs;
+global vision_csvs;
+global nav_csvs;
 
     if ~isvector(userx) || ~isvector(usery) || ~isvector(ts_gaze)
         error('Input must be a vector')
