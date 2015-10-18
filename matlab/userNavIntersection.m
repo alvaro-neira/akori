@@ -15,10 +15,10 @@ function [ gx, gy, ini2, ini, fin ] = userNavIntersection( userNumber, qid, ts_n
     fin=0;
     found=0;
     
-  
+    fullurl=strcat(url_prefix,url);
     for i=1:length(ts_nav)
         
-        if strcmp(user_url(i),strcat(url_prefix,url))
+        if strcmp(user_url(i),fullurl)
             found=1;
             
             if i<ini
