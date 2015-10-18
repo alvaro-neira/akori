@@ -1,4 +1,4 @@
-function [ timestamp_double, pupil_area_filtered, gx, gy ] = getVisionData( subjectId )
+function [ timestamp_double, pupil_area_filtered, gx, gy, sacc ] = getVisionData( subjectId )
     [ maxx, datapath, url_prefix, xoffsets, yoffsets, maxy, ...
     filelist, filelist2,questionlist, ms, coordinates_path, ...
     focusThreshold, minDepth, maleWebsites,maleSubjects,femaleWebsites,...
@@ -15,6 +15,7 @@ function [ timestamp_double, pupil_area_filtered, gx, gy ] = getVisionData( subj
     nrows=length(timestamp);
     gx=gaze_x;
     gy=gaze_y;
+    sacc=saccade;
     %%%%%%%%%%%%%%%%%%%%%%%%%%
     %% Interpolate NaN/zeros
     %%%%%%%%%%%%%%%%%%%%%%%%%%

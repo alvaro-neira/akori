@@ -1,18 +1,20 @@
 function [ maxx, datapath, url_prefix, xoffsets, yoffsets, maxy, ...
-    filelist, filelist2,questionlist, ms, deprecated1, ...
+    deprecated6, filelist2,questionlist, ms, deprecated1, ...
     deprecated5, deprecated4, maleWebsites,maleSubjects,femaleWebsites,...
     femaleSubjects,neutralWebsites,allSubjects, allWebsites, eeglist, ...
-    eegStartTimes, deprecated2, deprecated3, coordinates_csvs] = hardCodedData( )
+    eegStartTimes, deprecated2, deprecated3, coordinates_csvs, vision_csvs] = hardCodedData( )
 addpath internal;
 % minDepth=3;
 % focusThreshold=300;
 maxx=1920;
 datapath='/Users/aneira/data/';
+vision_csvs='/Users/aneira/data/vision_csvs/';
 deprecated1='NONE';
 deprecated2='NONE';
 deprecated3='NONE';
 deprecated4='NONE';
 deprecated5='NONE';
+deprecated6='NONE';
 
 
 % new_objects_path='/Users/aneira/lalo/Objetos finales/';
@@ -45,29 +47,29 @@ yoffsets(20)=-100;
 maxy=946;
 ms=1.157401129603386e-08;
 
-lst=[
-'suj1/sofey_20150622.171003.694091/vision.csv ';
-'suj2/sofey_20150623.151146.284899/vision.csv ';
-'suj3/sofey_20150623.170015.213743/vision.csv ';
-'suj4/sofey_20150624.152021.999849/vision.csv ';
-'suj5/sofey_20150625.132946.259604/vision.csv ';
-'suj6/sofey_20150625.182949.378244/vision.csv ';
-'suj7/sofey_20150626.113812.831099/vision.csv ';
-'suj8/sofey_20150626.132614.756886/vision.csv ';
-'suj9/sofey_20150630.151708.864330/vision.csv ';
-'suj10/sofey_20150701.122612.963045/vision.csv';
-'suj11/sofey_20150701.142125.918000/vision.csv';
-'suj12/sofey_20150702.104759.799348/vision.csv';
-'suj13/sofey_20150702.142919.822211/vision.csv';
-'suj14/sofey_20150702.172213.902820/vision.csv';
-'suj15/sofey_20150708.154158.067584/vision.csv';
-'suj16/sofey_20150710.100441.159137/vision.csv';
-'suj17/sofey_20150710.122606.803479/vision.csv';
-'suj19/sofey_20150713.100245.473159/vision.csv';
-'suj20/sofey_20150714.125755.020633/vision.csv';
-'NONE                                         ';
-'suj22/sofey_20151007.141717.712002/vision.csv';
-];
+% lst=[
+% 'suj1/sofey_20150622.171003.694091/vision.csv ';
+% 'suj2/sofey_20150623.151146.284899/vision.csv ';
+% 'suj3/sofey_20150623.170015.213743/vision.csv ';
+% 'suj4/sofey_20150624.152021.999849/vision.csv ';
+% 'suj5/sofey_20150625.132946.259604/vision.csv ';
+% 'suj6/sofey_20150625.182949.378244/vision.csv ';
+% 'suj7/sofey_20150626.113812.831099/vision.csv ';
+% 'suj8/sofey_20150626.132614.756886/vision.csv ';
+% 'suj9/sofey_20150630.151708.864330/vision.csv ';
+% 'suj10/sofey_20150701.122612.963045/vision.csv';
+% 'suj11/sofey_20150701.142125.918000/vision.csv';
+% 'suj12/sofey_20150702.104759.799348/vision.csv';
+% 'suj13/sofey_20150702.142919.822211/vision.csv';
+% 'suj14/sofey_20150702.172213.902820/vision.csv';
+% 'suj15/sofey_20150708.154158.067584/vision.csv';
+% 'suj16/sofey_20150710.100441.159137/vision.csv';
+% 'suj17/sofey_20150710.122606.803479/vision.csv';
+% 'suj19/sofey_20150713.100245.473159/vision.csv';
+% 'suj20/sofey_20150714.125755.020633/vision.csv';
+% 'NONE                                         ';
+% 'suj22/sofey_20151007.141717.712002/vision.csv';
+% ];
 nav=[
 'suj1/sofey_browserdata_20150622.171405.491/navegacion.csv ';
 'suj2/sofey_browserdata_20150623.151646.478/navegacion.csv ';
@@ -164,7 +166,7 @@ questions=[ %sorted
 'wired_note    ';
     ];
 
-filelist=cellstr(lst);
+%filelist=cellstr(lst);
 filelist2=cellstr(nav);
 questionlist=cellstr(questions);
 
