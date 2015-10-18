@@ -1,13 +1,13 @@
 
-function [ nviews, focuses ] = processObject( id, userx, usery, objectx, objecty, width, ...
-    height, offsetx, offsety, ts_gaze, ini )
+function [ focuses ] = processObject( id, userx, usery, objectx, objecty, width, ...
+    height, offsetx, offsety, ts_gaze, ini, focusThreshold )
 [ maxx, datapath, url_prefix, xoffsets, yoffsets, maxy, filelist, ...
-    filelist2,questionlist, ms, deprecated1, focusThreshold ] = hardCodedData( );
+    filelist2,questionlist, ms, deprecated1, deprecated5 ] = hardCodedData( );
 
     if ~isvector(userx) || ~isvector(usery) || ~isvector(ts_gaze)
         error('Input must be a vector')
     end
-    nviews=0;
+   
     firstts=ts_gaze(ini+length(userx));
     lastts=ts_gaze(ini);
     inFocus=0;
@@ -16,7 +16,7 @@ function [ nviews, focuses ] = processObject( id, userx, usery, objectx, objecty
     for i=1:length(userx)
          
         if isInside(userx(i),usery(i),objectx, objecty, width, height, offsetx, offsety )
-            nviews=nviews+1;
+            
             inFocus=1;
             if firstts>ts_gaze(ini+i)
                 firstts=ts_gaze(ini+i);

@@ -1,14 +1,19 @@
 function [ maxx, datapath, url_prefix, xoffsets, yoffsets, maxy, ...
     filelist, filelist2,questionlist, ms, deprecated1, ...
-    focusThreshold, minDepth, maleWebsites,maleSubjects,femaleWebsites,...
+    deprecated5, deprecated4, maleWebsites,maleSubjects,femaleWebsites,...
     femaleSubjects,neutralWebsites,allSubjects, allWebsites, eeglist, ...
     eegStartTimes, deprecated2, deprecated3, coordinates_csvs] = hardCodedData( )
-addpath internal;
+% addpath internal;
+% minDepth=3;
+% focusThreshold=300;
 maxx=1920;
 datapath='/Users/aneira/data/';
 deprecated1='NONE';
 deprecated2='NONE';
 deprecated3='NONE';
+deprecated4='NONE';
+deprecated5='NONE';
+
 
 % new_objects_path='/Users/aneira/lalo/Objetos finales/';
 url_prefix='file:///C:/Users/Gino/Desktop/websites/';
@@ -39,7 +44,7 @@ yoffsets(20)=-100;
 
 maxy=946;
 ms=1.157401129603386e-08;
-focusThreshold=200;
+
 lst=[
 'suj1/sofey_20150622.171003.694091/vision.csv ';
 'suj2/sofey_20150623.151146.284899/vision.csv ';
@@ -162,7 +167,7 @@ questions=[ %sorted
 filelist=cellstr(lst);
 filelist2=cellstr(nav);
 questionlist=cellstr(questions);
-minDepth=3;
+
 maleWebsitesaux=[
     'gq_secuelas   ';
     'gq_bitbite    ';
@@ -188,7 +193,7 @@ femaleWebsitesaux=[
     ];
 neutralWebsitesaux=[
     'science_cat   ';
-    %'science_mag   '; //missing
+    'science_mag   '; 
     'columbia_about';
     'columbia_adm  ';
     'columbia_nobel';
@@ -218,7 +223,7 @@ allWebsitesAux=[
     'enfem_recetas ';
     'dc_manhattan  ';
     'science_cat   ';
-    %'science_mag   '; //missing
+    'science_mag   '; 
     'columbia_about';
     'columbia_adm  ';
     'columbia_nobel';
