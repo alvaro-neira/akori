@@ -17,8 +17,8 @@ global allWebsites;
 global eeglist;
 global eegStartTimes;
 global coordinates_csvs;
-global vision_csvs;
-global nav_csvs;
+% global vision_csvs;
+% global nav_csvs;
 
 hardCodedData( );
 

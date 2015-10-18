@@ -18,10 +18,8 @@ global allWebsites;
 global eeglist;
 global eegStartTimes;
 global coordinates_csvs;
-global vision_csvs;
-global nav_csvs;
-
-
+global navfilelist;
+global visionfilelist;
     res=[];
     c=1;
     for s=1: length(subjects)
@@ -32,8 +30,8 @@ global nav_csvs;
             qid=websites(k);
 
             [page_id,url,picture,coordinates_file] = findByPageId(qid);
-            filename = strcat(vision_csvs,'vision',num2str(userNumber),'.csv');
-            filename2 = strcat(nav_csvs,'nav',num2str(userNumber),'.csv');
+         filename = strcat(datapath,char(visionfilelist(userNumber)));
+             filename2 = strcat(datapath,char(navfilelist(userNumber)));
             [ts_nav,scrollTop,user_url] = importProcessedNav(filename2);
             [ts_gaze,pupil_area,gaze_x,gaze_y,saccade] = importProcessedVision(filename);
             [node_name,x,y,width,height,depth,has_text,id,k,object_id] = ...

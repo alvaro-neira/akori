@@ -18,8 +18,8 @@ global allWebsites;
 global eeglist;
 global eegStartTimes;
 global coordinates_csvs;
-global vision_csvs;
-global nav_csvs;
+% global vision_csvs;
+% global nav_csvs;
 global navfilelist;
 global visionfilelist;
 % addpath internal;
@@ -27,8 +27,8 @@ global visionfilelist;
 % focusThreshold=300;
 maxx=1920;
 datapath='/Users/aneira/data/';
-vision_csvs='/Users/aneira/data/vision_csvs/';
-nav_csvs='/Users/aneira/data/nav_csvs/';
+% vision_csvs='/Users/aneira/data/vision_csvs/';
+% nav_csvs='/Users/aneira/data/nav_csvs/';
 
 
 % new_objects_path='/Users/aneira/lalo/Objetos finales/';
