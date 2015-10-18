@@ -1,4 +1,4 @@
-function [ timestamp_double, pupil_area_filtered ] = getPupilSize( subjectId )
+function [ timestamp_double, pupil_area_filtered, gx, gy ] = getVisionData( subjectId )
     [ maxx, datapath, url_prefix, xoffsets, yoffsets, maxy, ...
     filelist, filelist2,questionlist, ms, coordinates_path, ...
     focusThreshold, minDepth, maleWebsites,maleSubjects,femaleWebsites,...
@@ -13,7 +13,8 @@ function [ timestamp_double, pupil_area_filtered ] = getPupilSize( subjectId )
     original_pupil_area = pupil_area;
     pupil_area_interpolated=pupil_area;
     nrows=length(timestamp);
-
+    gx=gaze_x;
+    gy=gaze_y;
     %%%%%%%%%%%%%%%%%%%%%%%%%%
     %% Interpolate NaN/zeros
     %%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -87,7 +88,6 @@ function [ timestamp_double, pupil_area_filtered ] = getPupilSize( subjectId )
     if length(find(isnan(pupil_area_filtered)))>0
         error('Resulting vector has one or more NaNs in it');
     end
-    clearvars -except timestamp_double pupil_area_filtered
 
 end
 
