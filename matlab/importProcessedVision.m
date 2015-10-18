@@ -28,7 +28,7 @@ delimiter = ',';
 %	column4: double (%f)
 %   column5: text (%q)
 % For more information, see the TEXTSCAN documentation.
-formatSpec = '%f%f%f%f%q%[^\n\r]';
+formatSpec = '%s%f%f%f%q%[^\n\r]';
 
 %% Open the text file.
 fileID = fopen(filename,'r');
@@ -56,7 +56,7 @@ fclose(fileID);
 % script.
 
 %% Allocate imported array to column variable names
-timestamp = dataArray{:, 1};
+timestamp = hex2num(dataArray{:, 1});
 pupil_area = dataArray{:, 2};
 gaze_x = dataArray{:, 3};
 gaze_y = dataArray{:, 4};

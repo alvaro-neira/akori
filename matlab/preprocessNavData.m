@@ -1,8 +1,26 @@
-[ maxx, datapath, url_prefix, xoffsets, yoffsets, maxy, ...
-    deprecated6, navfilelist,questionlist, ms, deprecated1, ...
-    deprecated5, deprecated4, maleWebsites,maleSubjects,femaleWebsites,...
-    femaleSubjects,neutralWebsites,allSubjects, allWebsites, eeglist, ...
-    eegStartTimes, deprecated2, deprecated3, coordinates_csvs, vision_csvs] = hardCodedData( );
+global maxx;
+global datapath;
+global url_prefix;
+global xoffsets;
+global yoffsets;
+global maxy;
+
+global questionlist;
+global ms;
+global maleWebsites;
+global maleSubjects;
+global femaleWebsites;
+global femaleSubjects;
+global neutralWebsites;
+global allSubjects;
+global allWebsites;
+global eeglist;
+global eegStartTimes;
+global coordinates_csvs;
+global vision_csvs;
+global nav_csvs;
+global navfilelist;
+hardCodedData( );
 
 for i=1:length(allSubjects)
     filename = strcat(datapath,char(navfilelist(i)));
@@ -16,7 +34,7 @@ for i=1:length(allSubjects)
     fprintf(fid,'timestamp,scrollTop,url\n');
     
     for j=1:length(timestamp)
-        fprintf(fid,'%f,%d,%s\n',timestamp(j), scrollTop(j), char(url(j)));
+        fprintf(fid,'%s,%d,%s\n',num2hex(timestamp(j)), scrollTop(j), char(url(j)));
     end
     fclose(fid);
 

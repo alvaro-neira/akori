@@ -25,7 +25,7 @@ delimiter = ',';
 %	column2: double (%f)
 %   column3: text (%s)
 % For more information, see the TEXTSCAN documentation.
-formatSpec = '%f%f%s%[^\n\r]';
+formatSpec = '%s%f%s%[^\n\r]';
 
 %% Open the text file.
 fileID = fopen(filename,'r');
@@ -53,7 +53,7 @@ fclose(fileID);
 % script.
 
 %% Allocate imported array to column variable names
-timestamp = dataArray{:, 1};
+timestamp = hex2num(dataArray{:, 1});
 scrollTop = dataArray{:, 2};
 url = dataArray{:, 3};
 

@@ -1,11 +1,28 @@
 function [ timestamp_double, pupil_area_filtered, gx, gy, sacc ] = getVisionData( subjectId )
-    [ maxx, datapath, url_prefix, xoffsets, yoffsets, maxy, ...
-    filelist, filelist2,questionlist, ms, coordinates_path, ...
-    focusThreshold, minDepth, maleWebsites,maleSubjects,femaleWebsites,...
-    femaleSubjects,neutralWebsites,allSubjects, allWebsites, eeglist, ...
-    eegStartTimes] = hardCodedData( );
+global maxx;
+global datapath;
+global url_prefix;
+global xoffsets;
+global yoffsets;
+global maxy;
 
-    filename = strcat(datapath,char(filelist(subjectId)));
+global questionlist;
+global ms;
+global maleWebsites;
+global maleSubjects;
+global femaleWebsites;
+global femaleSubjects;
+global neutralWebsites;
+global allSubjects;
+global allWebsites;
+global eeglist;
+global eegStartTimes;
+global coordinates_csvs;
+global vision_csvs;
+global nav_csvs;
+global navfilelist;
+global visionfilelist;
+filename = strcat(datapath,char(visionfilelist(subjectId)));
 
     [timestamp,frame_number,gaze_x,gaze_y,pupil_axis1,pupil_axis2,...
         pupil_area,saccade,blink] = importVision(filename);

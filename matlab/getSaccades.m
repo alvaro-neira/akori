@@ -1,9 +1,27 @@
 function [ res ] = getSaccades( subjects, websites )
-    [ maxx, datapath, url_prefix, xoffsets, yoffsets, maxy, ...
-    filelist, filelist2,questionlist, ms, deprecated1, ...
-    focusThreshold, minDepth, maleWebsites,maleSubjects,femaleWebsites,...
-    femaleSubjects,neutralWebsites,allSubjects, allWebsites, eeglist, ...
-    eegStartTimes, deprecated2, deprecated3, coordinates_csvs] = hardCodedData( );
+    global maxx;
+global datapath;
+global url_prefix;
+global xoffsets;
+global yoffsets;
+global maxy;
+
+global questionlist;
+global ms;
+global maleWebsites;
+global maleSubjects;
+global femaleWebsites;
+global femaleSubjects;
+global neutralWebsites;
+global allSubjects;
+global allWebsites;
+global eeglist;
+global eegStartTimes;
+global coordinates_csvs;
+global vision_csvs;
+global nav_csvs;
+
+
     res=[];
     c=1;
     for s=1: length(subjects)
@@ -14,14 +32,10 @@ function [ res ] = getSaccades( subjects, websites )
             qid=websites(k);
 
             [page_id,url,picture,coordinates_file] = findByPageId(qid);
-            filename = strcat(datapath,char(filelist(userNumber)));
-            filename2 = strcat(datapath,char(filelist2(userNumber)));
-            [timestamp2,outerWidth,outerHeight,innerWidth,innerHeight,screenX,...
-                    screenY,scrollTop,scrollLeft,url_id,user_url] = importNavegacion(filename2);
-            [timestamp,frame_number,gaze_x,gaze_y,pupil_axis1,pupil_axis2,pupil_area,saccade,blink]=importVision(filename);
-            ts_gaze=timestamp2double(timestamp);
-
-            ts_nav=timestamp2double(timestamp2);
+            filename = strcat(vision_csvs,'vision',num2str(userNumber),'.csv');
+            filename2 = strcat(nav_csvs,'nav',num2str(userNumber),'.csv');
+            [ts_nav,scrollTop,user_url] = importProcessedNav(filename2);
+            [ts_gaze,pupil_area,gaze_x,gaze_y,saccade] = importProcessedVision(filename);
             [node_name,x,y,width,height,depth,has_text,id,k,object_id] = ...
                 importCoordinates(char(strcat(coordinates_csvs,coordinates_file)));
 
