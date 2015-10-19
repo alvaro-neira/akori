@@ -1,4 +1,4 @@
-function [ retval ] = hardCodedData( )
+function [  ] = hardCodedData( )
 global maxx;
 global datapath;
 global url_prefix;
@@ -22,7 +22,7 @@ global coordinates_csvs;
 % global nav_csvs;
 global navfilelist;
 global visionfilelist;
-% addpath internal;
+addpath internal;
 % minDepth=3;
 % focusThreshold=300;
 maxx=1920;

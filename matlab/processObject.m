@@ -1,27 +1,27 @@
 
-function [ focuses ] = processObject( id, userx, usery, objectx, objecty, width, ...
+function [ res ] = processObject( id, userx, usery, objectx, objecty, width, ...
     height, offsetx, offsety, ts_gaze, ini, focusThreshold )
-global maxx;
-global datapath;
-global url_prefix;
-global xoffsets;
-global yoffsets;
-global maxy;
+    global maxx;
+    global datapath;
+    global url_prefix;
+    global xoffsets;
+    global yoffsets;
+    global maxy;
 
-global questionlist;
-global ms;
-global maleWebsites;
-global maleSubjects;
-global femaleWebsites;
-global femaleSubjects;
-global neutralWebsites;
-global allSubjects;
-global allWebsites;
-global eeglist;
-global eegStartTimes;
-global coordinates_csvs;
-global vision_csvs;
-global nav_csvs;
+    global questionlist;
+    global ms;
+    global maleWebsites;
+    global maleSubjects;
+    global femaleWebsites;
+    global femaleSubjects;
+    global neutralWebsites;
+    global allSubjects;
+    global allWebsites;
+    global eeglist;
+    global eegStartTimes;
+    global coordinates_csvs;
+    global vision_csvs;
+    global nav_csvs;
 
     if ~isvector(userx) || ~isvector(usery) || ~isvector(ts_gaze)
         error('Input must be a vector')
@@ -30,8 +30,9 @@ global nav_csvs;
     firstts=ts_gaze(ini+length(userx));
     lastts=ts_gaze(ini);
     inFocus=0;
-    focuses=[];
-    fcounter=1;
+    estimatedLength=20;
+    res=zeros(estimatedLength,2);
+    fcounter=0;
     for i=1:length(userx)
          
         if isInside(userx(i),usery(i),objectx, objecty, width, height, offsetx, offsety )
@@ -47,8 +48,10 @@ global nav_csvs;
         else
             if inFocus
                 if (lastts-firstts)>=(focusThreshold*ms)
-                    focuses(fcounter,1)=(lastts-firstts)/ms;
                     fcounter=fcounter+1;
+                    res(fcounter,1)=firstts/ms;
+                    res(fcounter,2)=lastts/ms;
+                    
                 end
             end
             firstts=ts_gaze(ini+length(userx));
@@ -56,6 +59,13 @@ global nav_csvs;
             inFocus=0;
         end
     end
-    
+    if fcounter>0
+        res=res(1:fcounter,:);
+    else
+        res=[];
+    end
+    if fcounter>estimatedLength
+        disp('fcounter=',fcounter,'>estimatedLength=',estimatedLength);
+    end
 end
 
