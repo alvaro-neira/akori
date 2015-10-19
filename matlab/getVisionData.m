@@ -1,4 +1,4 @@
-function [ timestamp_double, pupil_area_filtered, gx, gy, sacc ] = getVisionData( subjectId )
+function [ timestamp_double, pupil_area_filtered, gx, gy, sacc, blink ] = getVisionData( subjectId )
 global maxx;
 global datapath;
 global url_prefix;
@@ -25,7 +25,7 @@ global visionfilelist;
 filename = strcat(datapath,char(visionfilelist(subjectId)));
 
     [timestamp,frame_number,gaze_x,gaze_y,pupil_axis1,pupil_axis2,...
-        pupil_area,saccade,blink] = importVision(filename);
+        pupil_area,saccade,blk] = importVision(filename);
    
     original_pupil_area = pupil_area;
     pupil_area_interpolated=pupil_area;
@@ -106,6 +106,6 @@ filename = strcat(datapath,char(visionfilelist(subjectId)));
     if length(find(isnan(pupil_area_filtered)))>0
         error('Resulting vector has one or more NaNs in it');
     end
-
+    blink=blk;
 end
 

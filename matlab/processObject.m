@@ -49,8 +49,8 @@ function [ res ] = processObject( id, userx, usery, objectx, objecty, width, ...
             if inFocus
                 if (lastts-firstts)>=(focusThreshold*ms)
                     fcounter=fcounter+1;
-                    res(fcounter,1)=firstts/ms;
-                    res(fcounter,2)=lastts/ms;
+                    res(fcounter,1)=firstts;
+                    res(fcounter,2)=lastts;
                     
                 end
             end

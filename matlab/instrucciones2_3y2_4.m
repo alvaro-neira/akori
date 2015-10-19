@@ -24,9 +24,17 @@ websites=maleWebsites;
 len1=length(maleSubjects);
 len2=length(websites);
 focusThreshold=1000;
+
 for persona=1:len1
+    [ timestamp_double, pupil_area_filtered, gx, gy, sacc, blk ] = getVisionData( persona );
     for pregunta=1:len2
-        userFocuses=getFocuses(persona,websites(pregunta),focusThreshold);
-        userFocuses
+        userFocuses=getFocuses(persona,websites(pregunta),focusThreshold,timestamp_double,...
+            pupil_area_filtered,gx,gy,sacc,blk);
+        [len3 wid]=size(userFocuses);
+        for fijacion=1:len3
+             [ timestamp,pupil_area,gaze_x,gaze_y,saccade,blink ] = getETDataByTimeAndPerson( userFocuses(fijacion,1),...
+                 userFocuses(fijacion,2), timestamp_double,pupil_area_filtered,gx,gy,sacc,blk);
+        end
+       
     end
 end

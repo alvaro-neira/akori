@@ -1,4 +1,5 @@
-function [ res ] = getFocuses( persona, pregunta, focusThreshold )
+function [ res ] = getFocuses( persona, pregunta, focusThreshold,ts_gaze,...
+    pupil_area,gaze_x,gaze_y,saccade,blink )
     global maxx;
     global datapath;
     global url_prefix;
@@ -31,7 +32,7 @@ function [ res ] = getFocuses( persona, pregunta, focusThreshold )
     [page_id,url,picture,coordinates_file] = findByPageId(pregunta);
     visionfile = strcat(datapath,char(visionfilelist(persona)));
     navfile = strcat(datapath,char(navfilelist(persona)));
-    [ts_gaze,pupil_area,gaze_x,gaze_y,saccade,blink] = importProcessedVision(visionfile);
+    
     [ts_nav,scrollTop,user_url] = importProcessedNav(navfile);
             
      
