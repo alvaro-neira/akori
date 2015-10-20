@@ -30,7 +30,7 @@ function [ res ] = getFocuses( persona, pregunta, focusThreshold,ts_gaze,...
 
  
     [page_id,url,picture,coordinates_file] = findByPageId(pregunta);
-    visionfile = strcat(datapath,char(visionfilelist(persona)));
+
     navfile = strcat(datapath,char(navfilelist(persona)));
     
     [ts_nav,scrollTop,user_url] = importProcessedNav(navfile);

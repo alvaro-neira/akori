@@ -30,7 +30,7 @@ function [ res ] = processObject( id, userx, usery, objectx, objecty, width, ...
     firstts=ts_gaze(ini+length(userx));
     lastts=ts_gaze(ini);
     inFocus=0;
-    estimatedLength=20;
+    estimatedLength=33;
     res=zeros(estimatedLength,2);
     fcounter=0;
     for i=1:length(userx)
@@ -65,7 +65,7 @@ function [ res ] = processObject( id, userx, usery, objectx, objecty, width, ...
         res=[];
     end
     if fcounter>estimatedLength
-        disp('fcounter=',fcounter,'>estimatedLength=',estimatedLength);
+        disp(strcat('fcounter=',num2str(fcounter),'>estimatedLength=',num2str(estimatedLength)));
     end
 end
 
