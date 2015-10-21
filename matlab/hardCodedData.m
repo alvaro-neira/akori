@@ -18,6 +18,10 @@ global allWebsites;
 global eeglist;
 global eegStartTimes;
 global coordinates_csvs;
+global subjectWithoutEEG;
+subjectWithoutEEG=8;
+global subjectWithoutET;
+subjectWithoutET=20;
 % global vision_csvs;
 % global nav_csvs;
 global navfilelist;
@@ -252,8 +256,8 @@ allWebsitesAux=[
 ];
 
 maleSubjects=[1;2;3;4;5;6;7;8;9;10;];
-femaleSubjects=[11;12;13;14;15;16;17;18;19;];
-allSubjects=[1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;];
+femaleSubjects=[11;12;13;14;15;16;17;18;19;20;];
+allSubjects=[1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;];
 
 maleWebsites=cellstr(maleWebsitesaux);
 neutralWebsites=cellstr(neutralWebsitesaux);

@@ -20,6 +20,9 @@ function [ res ] = getFocuses( persona, pregunta, focusThreshold,ts_gaze,...
     global coordinates_csvs;
     global navfilelist;
     global visionfilelist;
+    global subjectWithoutET;
+    global subjectWithoutEEG;
+
 
     resCounter=1;
     estimatedLength=500;   
