@@ -25,7 +25,33 @@ global rng_settings;
 hardCodedData();
 
 %Male Websites
-[P]=getPartitions(maleWebsites,1000);
+[P, counters, totalSamples]=getPartitions(maleWebsites,1000);
+[h, nPartitions, depth]=size(P);
+nFeatures=depth-1;
+for partitionToSkip=1:nPartitions
+    heightToSkip=counters(partitionToSkip);
+    height=totalSamples-heightToSkip;
+
+   
+    
+    Y=zeros(height,1);
+    X=zeros(height,nFeatures);
+    ycounter=0;
+    for partitionNumber=1:nPartitions
+        if partitionNumber==partitionToSkip
+            continue;
+        end
+        for i=1:counters(partitionNumber)
+            
+            Y(ycounter+i)=P(i,partitionNumber,depth);
+            for j=1:nFeatures
+                X(ycounter+i,j)=P(i,partitionNumber,j);
+            end
+        end
+        ycounter=ycounter+counters(partitionNumber);
+    end
+end
+
 
 % std_pupil_area male
 % dMax male

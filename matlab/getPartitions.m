@@ -1,4 +1,4 @@
-function [P] = getPartitions( websites, focusThreshold )
+function [P, counters, numberOfFocuses] = getPartitions( websites, focusThreshold )
     global maxx;
     global datapath;
     global url_prefix;
@@ -32,7 +32,7 @@ function [P] = getPartitions( websites, focusThreshold )
     counters=zeros(10,1);
     maxPartitionSize=ceil(numberOfFocuses/10);
 
-    P=zeros(maxPartitionSize,10,3);
+    P=zeros(maxPartitionSize,10,4);
     
     rng(rng_settings);
     for persona=1:len1
@@ -93,12 +93,12 @@ function [P] = getPartitions( websites, focusThreshold )
                 P(counters(rand10),rand10,2)=ddiff;
                 [cdiff,cindex]=contraccionMaxima(pupil_area);
                 P(counters(rand10),rand10,3)=cdiff;
+                P(counters(rand10),rand10,4)=isHombre(subjectId);
             end
         end
         
     end
     P=P(1:max(counters),:,:);
-    counters
     
 end
 
