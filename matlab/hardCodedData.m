@@ -26,6 +26,8 @@ subjectWithoutET=20;
 % global nav_csvs;
 global navfilelist;
 global visionfilelist;
+global rng_settings;
+rng_settings=99; % seed = 99 ?;
 addpath internal;
 % minDepth=3;
 % focusThreshold=300;

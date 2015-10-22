@@ -1,5 +1,4 @@
 function [ output_args ] = gazeBySubject( filecounter )
-    [ maxx, datapath, url_prefix, xoffsets, yoffsets, maxy, filelist, filelist2 ] = hardCodedData();
     filename = strcat(datapath,char(filelist(filecounter)));
     filename2 = strcat(datapath,char(filelist2(filecounter)));
     [timestamp,frame_number,gaze_x,gaze_y,pupil_axis1,pupil_axis2,pupil_area,saccade,blink]=importVision(filename);

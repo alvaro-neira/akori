@@ -22,7 +22,7 @@ global subjectWithoutET;
 global subjectWithoutEEG;
 
 hardCodedData();
-fid = fopen('instrucciones2_5.txt','w');
+fid = fopen('wa.txt','w');
 
 ins25byWebsiteType( fid,'sitios masculinos',maleWebsites );
 ins25byWebsiteType( fid,'sitios femeninos',femaleWebsites );

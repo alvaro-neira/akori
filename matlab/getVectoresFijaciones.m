@@ -25,8 +25,6 @@ function [ max_pupil_area,min_pupil_area,mean_pupil_area,std_pupil_area,...
     global subjectWithoutET;
     global subjectWithoutEEG;
 
-    hardCodedData();
-
     len1=length(subjects);
     len2=length(websites);
    
@@ -53,7 +51,7 @@ function [ max_pupil_area,min_pupil_area,mean_pupil_area,std_pupil_area,...
             disp(strcat('skipping subjectWithoutET=',num2str(subjectWithoutET)));
             continue;
         end
-        subjectId;
+    
         [ timestamp_double, pupil_area_filtered, gx, gy, sacc, blk ] = getVisionData( subjectId );
         if subjectId ~= subjectWithoutEEG
             [ ts_eeg, o1, o2 ] = getEeg( subjectId );
