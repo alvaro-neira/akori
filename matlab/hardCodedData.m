@@ -1,4 +1,5 @@
 function [  ] = hardCodedData( )
+clear all;
 global maxx;
 global datapath;
 global url_prefix;
@@ -28,6 +29,8 @@ global navfilelist;
 global visionfilelist;
 global rng_settings;
 rng_settings=99; % seed = 99 ?;
+global QMF;
+QMF = MakeONFilter('Daubechies',8);
 addpath internal;
 % minDepth=3;
 % focusThreshold=300;

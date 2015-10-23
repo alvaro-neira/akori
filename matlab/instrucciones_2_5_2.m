@@ -34,7 +34,7 @@ for partitionToSkip=1:nPartitions
 
    
     
-    Y=zeros(height,1);
+    Y=[cellstr('none');cellstr('none')];
     X=zeros(height,nFeatures);
     ycounter=0;
     for partitionNumber=1:nPartitions
@@ -42,20 +42,33 @@ for partitionToSkip=1:nPartitions
             continue;
         end
         for i=1:counters(partitionNumber)
-            
-            Y(ycounter+i)=P(i,partitionNumber,depth);
+            if P(i,partitionNumber,depth)
+                Y(ycounter+i)=cellstr('hombre');
+            else
+                Y(ycounter+i)=cellstr('mujer');
+            end
             for j=1:nFeatures
                 X(ycounter+i,j)=P(i,partitionNumber,j);
             end
         end
         ycounter=ycounter+counters(partitionNumber);
     end
+    SVMModel=fitcsvm(X,Y,'KernelFunction','rbf','Standardize',true,'ClassNames',{'mujer','hombre' });
+
 end
 
 
 % std_pupil_area male
 % dMax male
 % cMax male
+% std_D2_o1 male
+% std_A1_o1 male
+% energy_D2_o1 male
+% energy_A1_o1 male
+% std_D2_o2 male
+% std_A1_o2 male
+% energy_D2_o2 male
+% energy_A1_o2 male
 
 % max_pupil_area female
 % min_pupil_area female

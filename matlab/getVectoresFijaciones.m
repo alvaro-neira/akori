@@ -1,27 +1,8 @@
 function [ max_pupil_area,min_pupil_area,mean_pupil_area,std_pupil_area,...
     dMaxima,cMaxima,max_eeg_o1,min_eeg_o1,std_eeg_o1,...
-    max_eeg_o2,min_eeg_o2,std_eeg_o2] = ...
+    max_eeg_o2,min_eeg_o2,std_eeg_o2,std_A4_o1, std_D4_o1, std_D3_o1, std_D2_o1, std_A1_o1, energy_A4_o1, energy_D4_o1, energy_D3_o1, energy_D2_o1, energy_A1_o1, std_A4_o2, std_D4_o2, std_D3_o2, std_D2_o2, std_A1_o2, energy_A4_o2, energy_D4_o2, energy_D3_o2, energy_D2_o2, energy_A1_o2] = ...
     getVectoresFijaciones( subjects, websites, focusThreshold )
-    global maxx;
-    global datapath;
-    global url_prefix;
-    global xoffsets;
-    global yoffsets;
-    global maxy;
-    global questionlist;
-    global ms;
-    global maleWebsites;
-    global maleSubjects;
-    global femaleWebsites;
-    global femaleSubjects;
-    global neutralWebsites;
-    global allSubjects;
-    global allWebsites;
-    global eeglist;
-    global eegStartTimes;
-    global coordinates_csvs;
-    global navfilelist;
-    global visionfilelist;
+    global QMF;
     global subjectWithoutET;
     global subjectWithoutEEG;
 
@@ -44,6 +25,28 @@ function [ max_pupil_area,min_pupil_area,mean_pupil_area,std_pupil_area,...
     min_eeg_o2=zeros(expectedFocusesSize,1);
     std_eeg_o2=zeros(expectedFocusesSize,1);
     
+    std_A4_o1=zeros(expectedFocusesSize,1);
+    std_D4_o1=zeros(expectedFocusesSize,1);
+    std_D3_o1=zeros(expectedFocusesSize,1);
+    std_D2_o1=zeros(expectedFocusesSize,1);
+    std_A1_o1=zeros(expectedFocusesSize,1);
+    energy_A4_o1=zeros(expectedFocusesSize,1);
+    energy_D4_o1=zeros(expectedFocusesSize,1);
+    energy_D3_o1=zeros(expectedFocusesSize,1);
+    energy_D2_o1=zeros(expectedFocusesSize,1);
+    energy_A1_o1=zeros(expectedFocusesSize,1);
+    std_A4_o2=zeros(expectedFocusesSize,1);
+    std_D4_o2=zeros(expectedFocusesSize,1);
+    std_D3_o2=zeros(expectedFocusesSize,1);
+    std_D2_o2=zeros(expectedFocusesSize,1);
+    std_A1_o2=zeros(expectedFocusesSize,1);
+    energy_A4_o2=zeros(expectedFocusesSize,1);
+    energy_D4_o2=zeros(expectedFocusesSize,1);
+    energy_D3_o2=zeros(expectedFocusesSize,1);
+    energy_D2_o2=zeros(expectedFocusesSize,1);
+    energy_A1_o2=zeros(expectedFocusesSize,1);
+
+    
                 
     for persona=1:len1
         subjectId=subjects(persona);
@@ -65,9 +68,9 @@ function [ max_pupil_area,min_pupil_area,mean_pupil_area,std_pupil_area,...
                 if subjectId == subjectWithoutET
                     error('Handle subjectWithoutET');
                 end
-                 [ timestamp,pupil_area,gaze_x,gaze_y,saccade,blink ] = getETDataByTimeAndPerson( userFocuses(fijacion,1),...
+                [ timestamp,pupil_area,gaze_x,gaze_y,saccade,blink ] = getETDataByTimeAndPerson( userFocuses(fijacion,1),...
                      userFocuses(fijacion,2), timestamp_double,pupil_area_filtered,gx,gy,sacc,blk);
-                 nWithET=nWithET+1;
+                nWithET=nWithET+1;
                 max_pupil_area(nWithET)=max(pupil_area);
                 min_pupil_area(nWithET)=min(pupil_area);
                 mean_pupil_area(nWithET)=mean(pupil_area);
@@ -76,20 +79,43 @@ function [ max_pupil_area,min_pupil_area,mean_pupil_area,std_pupil_area,...
                 dMaxima(nWithET)=ddiff;
                 [cdiff,cindex]=contraccionMaxima(pupil_area);
                 cMaxima(nWithET)=cdiff;
-                 if subjectId ~= subjectWithoutEEG
-                     nWithEEG=nWithEEG+1;
-                    [ timestamp_eeg,eeg_o1,eeg_o2 ] = getEEGDataByTimeAndPerson( userFocuses(fijacion,1),...
-                        userFocuses(fijacion,2), ts_eeg, o1, o2);
-                
-                    max_eeg_o1(nWithEEG)=max(eeg_o1);
-                    min_eeg_o1(nWithEEG)=min(eeg_o1);
-                    std_eeg_o1(nWithEEG)=std(eeg_o1);
-                    max_eeg_o2(nWithEEG)=max(eeg_o2);
-                    min_eeg_o2(nWithEEG)=min(eeg_o2);
-                    std_eeg_o2(nWithEEG)=std(eeg_o2);
-                 end
+                if subjectId == subjectWithoutEEG
+                    continue;
+                end
+                nWithEEG=nWithEEG+1;
+                [ timestamp_eeg,eeg_o1,eeg_o2 ] = getEEGDataByTimeAndPerson( userFocuses(fijacion,1),...
+                    userFocuses(fijacion,2), ts_eeg, o1, o2);
+               
+                max_eeg_o1(nWithEEG)=max(eeg_o1);
+                min_eeg_o1(nWithEEG)=min(eeg_o1);
+                std_eeg_o1(nWithEEG)=std(eeg_o1);
+                max_eeg_o2(nWithEEG)=max(eeg_o2);
+                min_eeg_o2(nWithEEG)=min(eeg_o2);
+                std_eeg_o2(nWithEEG)=std(eeg_o2);
+                [ A4_o1, D4_o1, D3_o1, D2_o1, A1_o1 ] = getWaveletCoefficients( eeg_o1 );
+                [ A4_o2, D4_o2, D3_o2, D2_o2, A1_o2 ] = getWaveletCoefficients( eeg_o2 );
 
-
+                std_A4_o1(nWithEEG)=std(A4_o1);
+                std_D4_o1(nWithEEG)=std(D4_o1);
+                std_D3_o1(nWithEEG)=std(D3_o1);
+                std_D2_o1(nWithEEG)=std(D2_o1);
+                std_A1_o1(nWithEEG)=std(A1_o1);
+                energy_A4_o1(nWithEEG)=sumsqr(A4_o1);
+                energy_D4_o1(nWithEEG)=sumsqr(D4_o1);
+                energy_D3_o1(nWithEEG)=sumsqr(D3_o1);
+                energy_D2_o1(nWithEEG)=sumsqr(D2_o1);
+                energy_A1_o1(nWithEEG)=sumsqr(A1_o1);
+                std_A4_o2(nWithEEG)=std(A4_o2);
+                std_D4_o2(nWithEEG)=std(D4_o2);
+                std_D3_o2(nWithEEG)=std(D3_o2);
+                std_D2_o2(nWithEEG)=std(D2_o2);
+                std_A1_o2(nWithEEG)=std(A1_o2);
+                energy_A4_o2(nWithEEG)=sumsqr(A4_o2);
+                energy_D4_o2(nWithEEG)=sumsqr(D4_o2);
+                energy_D3_o2(nWithEEG)=sumsqr(D3_o2);
+                energy_D2_o2(nWithEEG)=sumsqr(D2_o2);
+                energy_A1_o2(nWithEEG)=sumsqr(A1_o2);
+               
             end
         end
         
@@ -107,6 +133,28 @@ function [ max_pupil_area,min_pupil_area,mean_pupil_area,std_pupil_area,...
     max_eeg_o2=max_eeg_o2(1:nWithEEG,1);
     min_eeg_o2=min_eeg_o2(1:nWithEEG,1);
     std_eeg_o2=std_eeg_o2(1:nWithEEG,1);
+    
+    std_A4_o1 = std_A4_o1 (1:nWithEEG,:);
+    std_D4_o1 = std_D4_o1 (1:nWithEEG,:);
+    std_D3_o1 = std_D3_o1 (1:nWithEEG,:);
+    std_D2_o1 = std_D2_o1 (1:nWithEEG,:);
+    std_A1_o1 = std_A1_o1 (1:nWithEEG,:);
+    energy_A4_o1 = energy_A4_o1 (1:nWithEEG,:);
+    energy_D4_o1 = energy_D4_o1 (1:nWithEEG,:);
+    energy_D3_o1 = energy_D3_o1 (1:nWithEEG,:);
+    energy_D2_o1 = energy_D2_o1 (1:nWithEEG,:);
+    energy_A1_o1 = energy_A1_o1 (1:nWithEEG,:);
+    std_A4_o2 = std_A4_o2 (1:nWithEEG,:);
+    std_D4_o2 = std_D4_o2 (1:nWithEEG,:);
+    std_D3_o2 = std_D3_o2 (1:nWithEEG,:);
+    std_D2_o2 = std_D2_o2 (1:nWithEEG,:);
+    std_A1_o2 = std_A1_o2 (1:nWithEEG,:);
+    energy_A4_o2 = energy_A4_o2 (1:nWithEEG,:);
+    energy_D4_o2 = energy_D4_o2 (1:nWithEEG,:);
+    energy_D3_o2 = energy_D3_o2 (1:nWithEEG,:);
+    energy_D2_o2 = energy_D2_o2 (1:nWithEEG,:);
+    energy_A1_o2 = energy_A1_o2 (1:nWithEEG,:);
+
     if nWithET>expectedFocusesSize
         disp('nWithET=',nWithET,'>expectedFocusesSize=',expectedFocusesSize);
     end
