@@ -26,78 +26,56 @@ global MUJER;
 hardCodedData();
 
 %Male Websites
-[P, counters, totalSamples]=getPartitions(maleWebsites,1000);
-[h, nPartitions, depth]=size(P);
-nFeatures=depth-1;
-for partitionToSkip=1:nPartitions
-    heightToSkip=counters(partitionToSkip);
-    height=totalSamples-heightToSkip;
-    Ytest=zeros(heightToSkip,1);
-    Ypredicted=zeros(heightToSkip,1);
-    
-    Y=[cellstr('none');cellstr('none')];
-    X=zeros(height,nFeatures);
-    Xtest=zeros(heightToSkip,nFeatures);
-    ycounter=0;
-    for partitionNumber=1:nPartitions
-        if partitionNumber==partitionToSkip
-            continue;
-        end
-        for i=1:counters(partitionNumber)
-            if P(i,partitionNumber,depth)
-                Y(ycounter+i)=cellstr(HOMBRE);
-            else
-                Y(ycounter+i)=cellstr(MUJER);
-            end
-            for j=1:nFeatures
-                X(ycounter+i,j)=P(i,partitionNumber,j);
-            end
-        end
-        ycounter=ycounter+counters(partitionNumber);
-    end
-    SVMModel=fitcsvm(X,Y,'KernelFunction','rbf','Standardize',true,'ClassNames',{MUJER,HOMBRE });
-    
-    %Testing
-    testLength=heightToSkip;
-    for i=1:testLength
-        for j=1:nFeatures
-            Xtest(i,j)=P(i,partitionToSkip,j);
-        end
-    end
-    for i=1:testLength
-        Ytest(i)=P(i,partitionToSkip,depth);
-    end
-    labels = predict(SVMModel,Xtest); 
-    for i=1:testLength
-        Ypredicted(i)=strcmp(labels(i),HOMBRE);
-    end
-    
-    C=confusionmat(Ytest,Ypredicted);
-    VP=C(1,1);
-    FN=C(1,2);
-    FP=C(2,1);
-    VN=C(2,2);
-    recall= VP/(VP+FN);
-    precision= VP/(VP+FP);
-    accuracy= (VP+VN)/(VP+VN+FP+FN);
+% [P, counters, numberOfFocuses]=getPartitions(maleWebsites,1000);
+% SVMsTests( P, counters, numberOfFocuses );
+% [P, counters, numberOfFocuses] = getPartitionsFemaleSites( 1000 );
+% SVMsTests( P, counters, numberOfFocuses );
+[P, counters, numberOfFocuses] = getPartitionsNeutralSites( 1000 );
+SVMsTests( P, counters, numberOfFocuses );
 
-    disp(strcat('recall=',num2str(recall),',precision=',num2str(precision),',accuracy=',num2str(accuracy)));
+% male
+% male
+% 
+% Min o1
+% std_D2_o1
+% std_A1_o1
+% energy_D2_o1
+% energy_A1_o1
+% std_A4_o2
+% std_D2_o2
+% std_A1_o2
+% energy_A4_o2
+% energy_D2_o2
+% energy_A1_o2
+% std_pupil_area
+% Dilatacion Maxima
+% Contraccion Maxima
 
-end
-
-
-% std_pupil_area male
-% dMax male
-% cMax male
-            
-% std_D2_o1 male
-% std_A1_o1 male
-% energy_D2_o1 male
-% energy_A1_o1 male
-% std_D2_o2 male
-% std_A1_o2 male
-% energy_D2_o2 male
-% energy_A1_o2 male
+%female
+% max o1
+% min o1
+% std o1
+% std_A4_o1
+% std_D2_o1
+% std_A1_o1
+% energy_A4_o1
+% energy_D2_o1
+% energy_A1_o1
+% max o2
+% min o2
+% std o2
+% std_D4_o2
+% std_D2_o2
+% std_A1_o2
+% energy_D4_o2
+% energy_D2_o2
+% energy_A1_o2
+% max_pupil_area
+% min_pupil_area
+% mean_pupil_area
+% std_pupil_area
+% Dilatacion Maxima
+% Contraccion Maxima
 
 % max_pupil_area female
 % min_pupil_area female

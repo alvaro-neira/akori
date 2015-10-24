@@ -1,4 +1,4 @@
-function [P, counters, numberOfFocuses] = getPartitions( websites, focusThreshold )
+function [P, counters, numberOfFocuses] = getPartitionsNeutralSites( focusThreshold )
     global maxx;
     global datapath;
     global url_prefix;
@@ -24,6 +24,7 @@ function [P, counters, numberOfFocuses] = getPartitions( websites, focusThreshol
     global rng_settings;
 
     len1=length(allSubjects);
+    websites=neutralWebsites;
     len2=length(websites);
     
     numberOfFocuses=getNumberOfFocuses( websites, focusThreshold );
@@ -31,7 +32,7 @@ function [P, counters, numberOfFocuses] = getPartitions( websites, focusThreshol
     counters=zeros(10,1);
     maxPartitionSize=ceil(numberOfFocuses/10);
 
-    nFeatures=14;
+    nFeatures=17;
     P=zeros(maxPartitionSize,10,nFeatures+1);
     
     rng(rng_settings);
@@ -86,29 +87,29 @@ function [P, counters, numberOfFocuses] = getPartitions( websites, focusThreshol
                 end   
                 counters(rand10)=plusOne;
 
-                P(counters(rand10),rand10,1)=std(pupil_area);
-                [ddiff, dindex]=dilatacionMaxima( pupil_area );
-                P(counters(rand10),rand10,2)=ddiff;
-                [cdiff,cindex]=contraccionMaxima(pupil_area);
-                P(counters(rand10),rand10,3)=cdiff;
-                P(counters(rand10),rand10,4)=min(o1);  
-                P(counters(rand10),rand10,5)=std(D2_o1);
-                P(counters(rand10),rand10,6)=std(A1_o1); 
-                P(counters(rand10),rand10,7)=sumsqr(D2_o1); 
-                P(counters(rand10),rand10,8)=sumsqr(A1_o1); 
-                P(counters(rand10),rand10,9)=std(A4_o2); 
-                P(counters(rand10),rand10,10)=std(D2_o2); 
-                P(counters(rand10),rand10,11)=std(A1_o2); 
-                P(counters(rand10),rand10,12)=sumsqr(A4_o2); 
-                P(counters(rand10),rand10,13)=sumsqr(D2_o2); 
-                P(counters(rand10),rand10,14)=sumsqr(A1_o2); 
-              
+                P(counters(rand10),rand10,1)= std(D2_o1);
+                P(counters(rand10),rand10,2)= std(A1_o1);
+                P(counters(rand10),rand10,3)= sumsqr(D2_o1);
+                P(counters(rand10),rand10,4)= sumsqr(A1_o1);
+                P(counters(rand10),rand10,5)= std(A4_o2);
+                P(counters(rand10),rand10,6)= std(D2_o2);
+                P(counters(rand10),rand10,7)= std(A1_o2);
+                P(counters(rand10),rand10,8)= sumsqr(A4_o2);
+                P(counters(rand10),rand10,9)= sumsqr(D2_o2);
+                P(counters(rand10),rand10,10)= sumsqr(A1_o2);
+                P(counters(rand10),rand10,11)= max(pupil_area);
+                P(counters(rand10),rand10,12)= min(pupil_area);
+                P(counters(rand10),rand10,13)= mean(pupil_area);
+                P(counters(rand10),rand10,14)= contraccionMaxima( pupil_area );
+                P(counters(rand10),rand10,15)= max(o1);
+                P(counters(rand10),rand10,16)= max(o2);
+                P(counters(rand10),rand10,17)= std(o2);
+
                 P(counters(rand10),rand10,nFeatures+1)=isHombre(subjectId);
             end
         end
         
     end
     P=P(1:max(counters),:,:);
-    
 end
 

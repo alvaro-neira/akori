@@ -5,7 +5,7 @@ function [ max_pupil_area,min_pupil_area,mean_pupil_area,std_pupil_area,...
     global QMF;
     global subjectWithoutET;
     global subjectWithoutEEG;
-
+    global ms;
     len1=length(subjects);
     len2=length(websites);
    
@@ -69,7 +69,7 @@ function [ max_pupil_area,min_pupil_area,mean_pupil_area,std_pupil_area,...
                     error('Handle subjectWithoutET');
                 end
                 [ timestamp,pupil_area,gaze_x,gaze_y,saccade,blink ] = getETDataByTimeAndPerson( userFocuses(fijacion,1),...
-                     userFocuses(fijacion,2), timestamp_double,pupil_area_filtered,gx,gy,sacc,blk);
+                     userFocuses(fijacion,1)+1000*ms, timestamp_double,pupil_area_filtered,gx,gy,sacc,blk);
                 nWithET=nWithET+1;
                 max_pupil_area(nWithET)=max(pupil_area);
                 min_pupil_area(nWithET)=min(pupil_area);
@@ -84,7 +84,7 @@ function [ max_pupil_area,min_pupil_area,mean_pupil_area,std_pupil_area,...
                 end
                 nWithEEG=nWithEEG+1;
                 [ timestamp_eeg,eeg_o1,eeg_o2 ] = getEEGDataByTimeAndPerson( userFocuses(fijacion,1),...
-                    userFocuses(fijacion,2), ts_eeg, o1, o2);
+                    userFocuses(fijacion,1)+1000*ms, ts_eeg, o1, o2);
                
                 max_eeg_o1(nWithEEG)=max(eeg_o1);
                 min_eeg_o1(nWithEEG)=min(eeg_o1);

@@ -22,10 +22,20 @@ global subjectWithoutET;
 global subjectWithoutEEG;
 
 hardCodedData();
-fid = fopen('wa.txt','w');
+fid = fopen('male.txt','w');
 
 ins25byWebsiteType( fid,'sitios masculinos',maleWebsites );
+fprintf(fid,'DONE\n');
+fclose(fid);
+
+fid = fopen('female.txt','w');
+
 ins25byWebsiteType( fid,'sitios femeninos',femaleWebsites );
+fprintf(fid,'DONE\n');
+fclose(fid);
+ 
+fid = fopen('neutral.txt','w');
+
 ins25byWebsiteType( fid,'sitios neutrales',neutralWebsites );
 
 

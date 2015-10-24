@@ -1,7 +1,7 @@
 function [ res, newLength ] = truncateEEGSingal( signal )
     len=length(signal);
-    if len>8192 || len<128
-        error(strcat('len>8192 || len<128, len=',num2str(len)));
+    if len ~= 128 && len ~= 129
+        error(strcat('len ~= 128 && len ~= 129, len=',num2str(len)));
     end
     if len>=128 && len <256
         newLength=128;
