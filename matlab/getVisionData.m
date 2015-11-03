@@ -1,28 +1,28 @@
-function [ timestamp_double, pupil_area_filtered, gx, gy, sacc, blink ] = getVisionData( subjectId )
-global maxx;
-global datapath;
-global url_prefix;
-global xoffsets;
-global yoffsets;
-global maxy;
+function [ timestamp_double, pupil_area_filtered, gx, gy, sacc, blink, ...
+    original_pupil_area,pupil_area_interpolated,pupil_area_fixed ] = getVisionData( subjectId )
+    global maxx;
+    global datapath;
+    global url_prefix;
+    global xoffsets;
+    global yoffsets;
+    global maxy;
 
-global questionlist;
-global ms;
-global maleWebsites;
-global maleSubjects;
-global femaleWebsites;
-global femaleSubjects;
-global neutralWebsites;
-global allSubjects;
-global allWebsites;
-global eeglist;
-global eegStartTimes;
-global coordinates_csvs;
-global vision_csvs;
-global nav_csvs;
-global navfilelist;
-global visionfilelist;
-filename = strcat(datapath,char(visionfilelist(subjectId)));
+    global questionlist;
+    global ms;
+    global maleWebsites;
+    global maleSubjects;
+    global femaleWebsites;
+    global femaleSubjects;
+    global neutralWebsites;
+    global allSubjects;
+    global allWebsites;
+    global eeglist;
+    global eegStartTimes;
+    global coordinates_csvs;
+    
+    global navfilelist;
+    global visionfilelist;
+    filename = strcat(datapath,char(visionfilelist(subjectId)));
 
     [timestamp,frame_number,gaze_x,gaze_y,pupil_axis1,pupil_axis2,...
         pupil_area,saccade,blk] = importVision(filename);

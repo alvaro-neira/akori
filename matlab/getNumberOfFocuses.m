@@ -1,4 +1,4 @@
-function [numberOfFocuses] = getNumberOfFocuses( websites, focusThreshold )
+function [numberOfFocuses, maleNumber, femaleNumber] = getNumberOfFocuses( websites, focusThreshold )
     global maxx;
     global datapath;
     global url_prefix;
@@ -26,6 +26,9 @@ function [numberOfFocuses] = getNumberOfFocuses( websites, focusThreshold )
     len1=length(allSubjects);
     len2=length(websites);
     numberOfFocuses=0;
+    maleNumber=0;
+    femaleNumber=0;
+
   
     for persona=1:len1
         subjectId=allSubjects(persona);
@@ -41,6 +44,11 @@ function [numberOfFocuses] = getNumberOfFocuses( websites, focusThreshold )
             userFocuses=getFocuses(subjectId,websites(pregunta),focusThreshold,timestamp_double,...
                 pupil_area_filtered,gx,gy,sacc,blk);
             [len3 wid]=size(userFocuses);
+            if isHombre(subjectId)
+                maleNumber=maleNumber+len3;
+            else
+                femaleNumber=femaleNumber+len3;
+            end
             numberOfFocuses=numberOfFocuses+len3;
         end
     end

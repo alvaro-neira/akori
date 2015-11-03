@@ -1,4 +1,4 @@
-function [P, counters, numberOfFocuses] = getPartitions( websites, focusThreshold )
+function [P, counters, numberOfFocuses] = getPartitionsMaleSites( focusThreshold, nPartitions )
     global maxx;
     global datapath;
     global url_prefix;
@@ -22,17 +22,21 @@ function [P, counters, numberOfFocuses] = getPartitions( websites, focusThreshol
     global subjectWithoutET;
     global subjectWithoutEEG;
     global rng_settings;
-
+    
+    websites=maleWebsites;
+    nFeatures=14;
+    
     len1=length(allSubjects);
+    
     len2=length(websites);
     
     numberOfFocuses=getNumberOfFocuses( websites, focusThreshold );
       
-    counters=zeros(10,1);
-    maxPartitionSize=ceil(numberOfFocuses/10);
+    counters=zeros(nPartitions,1);
+    maxPartitionSize=ceil(numberOfFocuses/nPartitions);
 
-    nFeatures=14;
-    P=zeros(maxPartitionSize,10,nFeatures+1);
+    
+    P=zeros(maxPartitionSize,nPartitions,nFeatures+1);
     
     rng(rng_settings);
     for persona=1:len1
@@ -57,53 +61,42 @@ function [P, counters, numberOfFocuses] = getPartitions( websites, focusThreshol
                 [ A4_o1, D4_o1, D3_o1, D2_o1, A1_o1 ] = getWaveletCoefficients( eeg_o1 );
                 [ A4_o2, D4_o2, D3_o2, D2_o2, A1_o2 ] = getWaveletCoefficients( eeg_o2 );
 
-                rand10 = randi(10);
-                plusOne=counters(rand10)+1;
-                if counters(1)<maxPartitionSize-1 || ...
-                   counters(2)<maxPartitionSize-1 || ...
-                   counters(3)<maxPartitionSize-1 || ...
-                   counters(4)<maxPartitionSize-1 || ...
-                   counters(5)<maxPartitionSize-1 || ...
-                   counters(6)<maxPartitionSize-1 || ...
-                   counters(7)<maxPartitionSize-1 || ...
-                   counters(8)<maxPartitionSize-1 || ...
-                   counters(9)<maxPartitionSize-1 || ...
-                   counters(10)<maxPartitionSize-1 
-                      
-
+                randN = randi(nPartitions);
+                plusOne=counters(randN)+1;
+                if length(find(counters < maxPartitionSize-1)) > 0
                     while plusOne > maxPartitionSize-1
-                        rand10 = randi(10);
-                        plusOne=counters(rand10)+1;
+                        randN = randi(nPartitions);
+                        plusOne=counters(randN)+1;
 
                     end
                 else
                     while plusOne > maxPartitionSize
-                        rand10 = randi(10);
-                        plusOne=counters(rand10)+1;
+                        randN = randi(10);
+                        plusOne=counters(randN)+1;
           
                     end
                 
                 end   
-                counters(rand10)=plusOne;
+               counters(randN)=plusOne;
 
-                P(counters(rand10),rand10,1)=std(pupil_area);
+                P(counters(randN),randN,1)=std(pupil_area);
                 [ddiff, dindex]=dilatacionMaxima( pupil_area );
-                P(counters(rand10),rand10,2)=ddiff;
+                P(counters(randN),randN,2)=ddiff;
                 [cdiff,cindex]=contraccionMaxima(pupil_area);
-                P(counters(rand10),rand10,3)=cdiff;
-                P(counters(rand10),rand10,4)=min(o1);  
-                P(counters(rand10),rand10,5)=std(D2_o1);
-                P(counters(rand10),rand10,6)=std(A1_o1); 
-                P(counters(rand10),rand10,7)=sumsqr(D2_o1); 
-                P(counters(rand10),rand10,8)=sumsqr(A1_o1); 
-                P(counters(rand10),rand10,9)=std(A4_o2); 
-                P(counters(rand10),rand10,10)=std(D2_o2); 
-                P(counters(rand10),rand10,11)=std(A1_o2); 
-                P(counters(rand10),rand10,12)=sumsqr(A4_o2); 
-                P(counters(rand10),rand10,13)=sumsqr(D2_o2); 
-                P(counters(rand10),rand10,14)=sumsqr(A1_o2); 
-              
-                P(counters(rand10),rand10,nFeatures+1)=isHombre(subjectId);
+                P(counters(randN),randN,3)=cdiff;
+                P(counters(randN),randN,4)=min(o1);
+                P(counters(randN),randN,5)=std(D2_o1);
+                P(counters(randN),randN,6)=std(A1_o1);
+                P(counters(randN),randN,7)=sumsqr(D2_o1);
+                P(counters(randN),randN,8)=sumsqr(A1_o1);
+                P(counters(randN),randN,9)=std(A4_o2);
+                P(counters(randN),randN,10)=std(D2_o2);
+                P(counters(randN),randN,11)=std(A1_o2);
+                P(counters(randN),randN,12)=sumsqr(A4_o2);
+                P(counters(randN),randN,13)=sumsqr(D2_o2);
+                P(counters(randN),randN,14)=sumsqr(A1_o2);
+
+                P(counters(randN),randN,nFeatures+1)=isHombre(subjectId);
             end
         end
         

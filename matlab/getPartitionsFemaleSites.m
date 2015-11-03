@@ -1,4 +1,4 @@
-function [P, counters, numberOfFocuses] = getPartitionsFemaleSites( focusThreshold )
+function [P, counters, numberOfFocuses] = getPartitionsFemaleSites( focusThreshold, nPartitions )
     global maxx;
     global datapath;
     global url_prefix;
@@ -22,18 +22,21 @@ function [P, counters, numberOfFocuses] = getPartitionsFemaleSites( focusThresho
     global subjectWithoutET;
     global subjectWithoutEEG;
     global rng_settings;
-
-    len1=length(allSubjects);
+    
     websites=femaleWebsites;
+    nFeatures=24;
+    
+    len1=length(allSubjects);
+    
     len2=length(websites);
     
     numberOfFocuses=getNumberOfFocuses( websites, focusThreshold );
       
-    counters=zeros(10,1);
-    maxPartitionSize=ceil(numberOfFocuses/10);
+    counters=zeros(nPartitions,1);
+    maxPartitionSize=ceil(numberOfFocuses/nPartitions);
 
-    nFeatures=24;
-    P=zeros(maxPartitionSize,10,nFeatures+1);
+    
+    P=zeros(maxPartitionSize,nPartitions,nFeatures+1);
     
     rng(rng_settings);
     for persona=1:len1
@@ -58,64 +61,54 @@ function [P, counters, numberOfFocuses] = getPartitionsFemaleSites( focusThresho
                 [ A4_o1, D4_o1, D3_o1, D2_o1, A1_o1 ] = getWaveletCoefficients( eeg_o1 );
                 [ A4_o2, D4_o2, D3_o2, D2_o2, A1_o2 ] = getWaveletCoefficients( eeg_o2 );
 
-                rand10 = randi(10);
-                plusOne=counters(rand10)+1;
-                if counters(1)<maxPartitionSize-1 || ...
-                   counters(2)<maxPartitionSize-1 || ...
-                   counters(3)<maxPartitionSize-1 || ...
-                   counters(4)<maxPartitionSize-1 || ...
-                   counters(5)<maxPartitionSize-1 || ...
-                   counters(6)<maxPartitionSize-1 || ...
-                   counters(7)<maxPartitionSize-1 || ...
-                   counters(8)<maxPartitionSize-1 || ...
-                   counters(9)<maxPartitionSize-1 || ...
-                   counters(10)<maxPartitionSize-1 
-                      
-
+                randN = randi(nPartitions);
+                plusOne=counters(randN)+1;
+                if length(find(counters < maxPartitionSize-1)) > 0
                     while plusOne > maxPartitionSize-1
-                        rand10 = randi(10);
-                        plusOne=counters(rand10)+1;
+                        randN = randi(nPartitions);
+                        plusOne=counters(randN)+1;
 
                     end
                 else
                     while plusOne > maxPartitionSize
-                        rand10 = randi(10);
-                        plusOne=counters(rand10)+1;
+                        randN = randi(10);
+                        plusOne=counters(randN)+1;
           
                     end
                 
                 end   
-                counters(rand10)=plusOne;
+               counters(randN)=plusOne;
 
-                P(counters(rand10),rand10,1)=std(A4_o1);
-                P(counters(rand10),rand10,2)=std(D2_o1);
-                P(counters(rand10),rand10,3)=std(A1_o1);
-                P(counters(rand10),rand10,4)=sumsqr(A4_o1);
-                P(counters(rand10),rand10,5)=sumsqr(D2_o1);
-                P(counters(rand10),rand10,6)=sumsqr(A1_o1);
-                P(counters(rand10),rand10,7)=std(D4_o2);
-                P(counters(rand10),rand10,8)=std(D2_o2);
-                P(counters(rand10),rand10,9)=std(A1_o2);
-                P(counters(rand10),rand10,10)=sumsqr(D4_o2);
-                P(counters(rand10),rand10,11)=sumsqr(D2_o2);
-                P(counters(rand10),rand10,12)=sumsqr(A1_o2);
-                P(counters(rand10),rand10,13)=std(pupil_area);
-                P(counters(rand10),rand10,14)=dilatacionMaxima( pupil_area );
-                P(counters(rand10),rand10,15)=contraccionMaxima( pupil_area );
-                P(counters(rand10),rand10,16)=max(pupil_area);
-                P(counters(rand10),rand10,17)=min(pupil_area);
-                P(counters(rand10),rand10,18)=mean(pupil_area);
-                P(counters(rand10),rand10,19)=max(eeg_o1);
-                P(counters(rand10),rand10,20)=min(eeg_o1);
-                P(counters(rand10),rand10,21)=std(eeg_o1);
-                P(counters(rand10),rand10,22)=max(eeg_o2);
-                P(counters(rand10),rand10,23)=min(eeg_o2);
-                P(counters(rand10),rand10,24)=std(eeg_o2);
-                P(counters(rand10),rand10,nFeatures+1)=isHombre(subjectId);
+                P(counters(randN),randN,1)=std(A4_o1);
+                P(counters(randN),randN,2)=std(D2_o1);
+                P(counters(randN),randN,3)=std(A1_o1);
+                P(counters(randN),randN,4)=sumsqr(A4_o1);
+                P(counters(randN),randN,5)=sumsqr(D2_o1);
+                P(counters(randN),randN,6)=sumsqr(A1_o1);
+                P(counters(randN),randN,7)=std(D4_o2);
+                P(counters(randN),randN,8)=std(D2_o2);
+                P(counters(randN),randN,9)=std(A1_o2);
+                P(counters(randN),randN,10)=sumsqr(D4_o2);
+                P(counters(randN),randN,11)=sumsqr(D2_o2);
+                P(counters(randN),randN,12)=sumsqr(A1_o2);
+                P(counters(randN),randN,13)=std(pupil_area);
+                P(counters(randN),randN,14)=dilatacionMaxima( pupil_area );
+                P(counters(randN),randN,15)=contraccionMaxima( pupil_area );
+                P(counters(randN),randN,16)=max(pupil_area);
+                P(counters(randN),randN,17)=min(pupil_area);
+                P(counters(randN),randN,18)=mean(pupil_area);
+                P(counters(randN),randN,19)=max(eeg_o1);
+                P(counters(randN),randN,20)=min(eeg_o1);
+                P(counters(randN),randN,21)=std(eeg_o1);
+                P(counters(randN),randN,22)=max(eeg_o2);
+                P(counters(randN),randN,23)=min(eeg_o2);
+                P(counters(randN),randN,24)=std(eeg_o2);
+                P(counters(randN),randN,nFeatures+1)=isHombre(subjectId);
             end
         end
         
     end
     P=P(1:max(counters),:,:);
+    
 end
 

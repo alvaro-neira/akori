@@ -25,13 +25,12 @@ global HOMBRE;
 global MUJER;
 hardCodedData();
 
-%Male Websites
-% [P, counters, numberOfFocuses]=getPartitions(maleWebsites,1000);
-% SVMsTests( P, counters, numberOfFocuses );
-% [P, counters, numberOfFocuses] = getPartitionsFemaleSites( 1000 );
-% SVMsTests( P, counters, numberOfFocuses );
-[P, counters, numberOfFocuses] = getPartitionsNeutralSites( 1000 );
-SVMsTests( P, counters, numberOfFocuses );
+%   [P, counters, numberOfFocuses]=getPartitionsMaleSites(1000,5);
+%   SVMsTests( P, counters, numberOfFocuses );
+ [P, counters, numberOfFocuses] = getPartitionsFemaleSites( 1000,5 );
+ SVMsTests( P, counters, numberOfFocuses );
+%  [P, counters, numberOfFocuses] = getPartitionsNeutralSites( 1000,5 );
+%  SVMsTests( P, counters, numberOfFocuses );
 
 % male
 % male
