@@ -35,7 +35,10 @@ global rng_settings;
 rng_settings=99; % seed = 99 ?;
 global QMF;
 QMF = MakeONFilter('Daubechies',8);
-
+% global HOMBRE;
+% global MUJER;
+% HOMBRE='hombre';
+% MUJER='mujer';
 addpath internal;
 % minDepth=3;
 % focusThreshold=300;

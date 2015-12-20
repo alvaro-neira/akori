@@ -25,7 +25,7 @@ global rng_settings;
 hardCodedData();
 
    [P, counters, numberOfFocuses]=getPartitionsMaleSites(1000,5);
-    SVMsTests( P, counters, numberOfFocuses );
+    SVMsTests( P, counters, numberOfFocuses,'male' );
 %    [P, counters, numberOfFocuses] = getPartitionsFemaleSites( 1000,5 );
 %    SVMsTests( P, counters, numberOfFocuses,'female' );
 %    [P, counters, numberOfFocuses] = getPartitionsNeutralSites( 1000,5 );

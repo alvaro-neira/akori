@@ -1,4 +1,4 @@
-function [  ] = SVMsTests( P, counters, totalSamples )
+function [  ] = SVMsTests( P, counters, totalSamples, title )
     global maxx;
     global datapath;
     global url_prefix;
@@ -26,6 +26,9 @@ function [  ] = SVMsTests( P, counters, totalSamples )
 
     [h, nPartitions, depth]=size(P);
     nFeatures=depth-1;
+    fid = fopen(strcat('modelos_',title,'.txt'),'w');
+    fprintf(fid,strcat('title=',title,'\n'));
+
     for partitionToSkip=1:nPartitions
         heightToSkip=counters(partitionToSkip);
         height=totalSamples-heightToSkip;
@@ -34,7 +37,6 @@ function [  ] = SVMsTests( P, counters, totalSamples )
 
         Y=[];
         X=zeros(height,nFeatures);
-        
         Xtest=zeros(heightToSkip,nFeatures);
         ycounter=0;
         for partitionNumber=1:nPartitions
@@ -43,9 +45,9 @@ function [  ] = SVMsTests( P, counters, totalSamples )
             end
             for i=1:counters(partitionNumber)
                 if P(i,partitionNumber,depth)
-                    Y(ycounter+i,1)=1;
+                    Y(ycounter+i,1)=1;%cellstr(HOMBRE);
                 else
-                    Y(ycounter+i,1)=0;
+                    Y(ycounter+i,1)=0;%cellstr(MUJER);
                 end
                 for j=1:nFeatures
                     X(ycounter+i,j)=P(i,partitionNumber,j);
@@ -53,10 +55,21 @@ function [  ] = SVMsTests( P, counters, totalSamples )
             end
             ycounter=ycounter+counters(partitionNumber);
         end
-        SVMModel=fitcsvm(X,Y,'KernelFunction','rbf','Standardize',true);
-%                 SVMModel=fitcsvm(X,Y,'KernelFunction','rbf','Standardize',true,'ClassNames',{0,1 });
+%       SVMModel=fitcsvm(X,Y,'KernelFunction','rbf','Standardize',true,'ClassNames',{MUJER,HOMBRE });
+%       SVMModel=fitcsvm(X,Y,'KernelFunction','linear','Standardize',true,'ClassNames',{MUJER,HOMBRE });
+        SVMModel=fitcsvm(X,Y,'KernelFunction','polynomial','PolynomialOrder',2,'Standardize',true); 
+% convert
+%         Ybin=zeros(length(Y),1);
+%         for i=1:length(Y)
+%             if strcmp(Y(i),MUJER)
+%                 Ybin(i)=0;
+%             elseif strcmp(Y(i),HOMBRE)
+%                 Ybin(i)=1;
+%             end
+%         end
 
-
+         [B, FitInfo] = lassoglm (X,Y,'binomial','Lambda',10) ;
+%         label=glmval(B,X,'logit') ;
         %Testing
         testLength=heightToSkip;
         for i=1:testLength
@@ -83,6 +96,13 @@ function [  ] = SVMsTests( P, counters, totalSamples )
         accuracy= (VP+VN)/(VP+VN+FP+FN);
 
         disp(strcat('recall=',num2str(recall),',precision=',num2str(precision),',accuracy=',num2str(accuracy)));
+        
+            fprintf(fid,strcat('recall=',num2str(recall),',precision=',num2str(precision),',accuracy=',num2str(accuracy),'\n'));
+
+        
+    
     end
+    fprintf(fid,'DONE\n');
+    fclose(fid);
 end
 
