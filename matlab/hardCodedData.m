@@ -1,3 +1,7 @@
+% Before running anything run
+% >> WavePath
+% >> eeglab
+
 function [  ] = hardCodedData( )
 clear all;
 global maxx;
@@ -30,6 +34,7 @@ global visionfilelist;
 global rng_settings;
 rng_settings=99; % seed = 99 ?;
 global QMF;
+addpath ('/Applications/MATLAB_R2015b.app/toolbox/matlab/addons/eeglab13_4_4b');
 QMF = MakeONFilter('Daubechies',8);
 global HOMBRE;
 global MUJER;
