@@ -22,8 +22,7 @@ function [  ] = SVMsTests( P, counters, totalSamples )
     global subjectWithoutET;
     global subjectWithoutEEG;
     global rng_settings;
-    global HOMBRE;
-    global MUJER;
+   
 
     [h, nPartitions, depth]=size(P);
     nFeatures=depth-1;
@@ -33,8 +32,9 @@ function [  ] = SVMsTests( P, counters, totalSamples )
         Ytest=zeros(heightToSkip,1);
         Ypredicted=zeros(heightToSkip,1);
 
-        Y=[cellstr('none');cellstr('none')];
+        Y=[];
         X=zeros(height,nFeatures);
+        
         Xtest=zeros(heightToSkip,nFeatures);
         ycounter=0;
         for partitionNumber=1:nPartitions
@@ -43,9 +43,9 @@ function [  ] = SVMsTests( P, counters, totalSamples )
             end
             for i=1:counters(partitionNumber)
                 if P(i,partitionNumber,depth)
-                    Y(ycounter+i)=cellstr(HOMBRE);
+                    Y(ycounter+i,1)=1;
                 else
-                    Y(ycounter+i)=cellstr(MUJER);
+                    Y(ycounter+i,1)=0;
                 end
                 for j=1:nFeatures
                     X(ycounter+i,j)=P(i,partitionNumber,j);
@@ -53,7 +53,9 @@ function [  ] = SVMsTests( P, counters, totalSamples )
             end
             ycounter=ycounter+counters(partitionNumber);
         end
-        SVMModel=fitcsvm(X,Y,'KernelFunction','rbf','Standardize',true,'ClassNames',{MUJER,HOMBRE });
+        SVMModel=fitcsvm(X,Y,'KernelFunction','rbf','Standardize',true);
+%                 SVMModel=fitcsvm(X,Y,'KernelFunction','rbf','Standardize',true,'ClassNames',{0,1 });
+
 
         %Testing
         testLength=heightToSkip;
@@ -67,7 +69,8 @@ function [  ] = SVMsTests( P, counters, totalSamples )
         end
         labels = predict(SVMModel,Xtest); 
         for i=1:testLength
-            Ypredicted(i)=strcmp(labels(i),HOMBRE);
+            
+            Ypredicted(i)=labels(i);
         end
 
         C=confusionmat(Ytest,Ypredicted);
