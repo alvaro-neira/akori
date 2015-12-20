@@ -37,7 +37,7 @@ function [  ] = SVMsTests( P, counters, totalSamples, title )
 
         Y=[];
         X=zeros(height,nFeatures);
-        Xtest=zeros(heightToSkip,nFeatures);
+       
         ycounter=0;
         for partitionNumber=1:nPartitions
             if partitionNumber==partitionToSkip
@@ -57,20 +57,17 @@ function [  ] = SVMsTests( P, counters, totalSamples, title )
         end
 %       SVMModel=fitcsvm(X,Y,'KernelFunction','rbf','Standardize',true,'ClassNames',{MUJER,HOMBRE });
 %       SVMModel=fitcsvm(X,Y,'KernelFunction','linear','Standardize',true,'ClassNames',{MUJER,HOMBRE });
-        SVMModel=fitcsvm(X,Y,'KernelFunction','polynomial','PolynomialOrder',2,'Standardize',true); 
-% convert
-%         Ybin=zeros(length(Y),1);
-%         for i=1:length(Y)
-%             if strcmp(Y(i),MUJER)
-%                 Ybin(i)=0;
-%             elseif strcmp(Y(i),HOMBRE)
-%                 Ybin(i)=1;
-%             end
-%         end
+%         SVMModel=fitcsvm(X,Y,'KernelFunction','polynomial','PolynomialOrder',2,'Standardize',true); 
 
-         [B, FitInfo] = lassoglm (X,Y,'binomial','Lambda',10) ;
+%          SVMModel = lassoglm (X,Y,'binomial','Lambda',10) ;
 %         label=glmval(B,X,'logit') ;
+
+SVMModel=fitglm(X,Y,'Distribution','binomial'); %te entrega todo el modelo. Creo q Y puede ser {hombre, mujer}
+
+Ypredicted=predict(SVMModel,X);  %Luego es lo mismo
+        
         %Testing
+        Xtest=zeros(heightToSkip,nFeatures);
         testLength=heightToSkip;
         for i=1:testLength
             for j=1:nFeatures
