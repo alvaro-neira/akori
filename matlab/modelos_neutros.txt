@@ -1,7 +1,7 @@
 title=neutros
-recall=0.93023,precision=0.92486,accuracy=0.91228
-recall=0.96,precision=0.93855,accuracy=0.93684
-recall=0.94611,precision=0.95181,accuracy=0.94056
-recall=0.96429,precision=0.94737,accuracy=0.94737
-recall=0.93711,precision=0.92547,accuracy=0.92281
+recall=0.97674,precision=1,accuracy=0.98596
+recall=1,precision=0.99432,accuracy=0.99649
+recall=1,precision=1,accuracy=1
+recall=1,precision=1,accuracy=1
+recall=1,precision=1,accuracy=1
 DONE

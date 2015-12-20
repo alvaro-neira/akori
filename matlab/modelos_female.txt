@@ -1,7 +1,7 @@
 title=female
-recall=0.74522,precision=0.72671,accuracy=0.69004
-recall=0.71698,precision=0.75497,accuracy=0.69742
-recall=0.75658,precision=0.73718,accuracy=0.71218
-recall=0.81046,precision=0.71676,accuracy=0.71324
-recall=0.68056,precision=0.69014,accuracy=0.6679
+recall=0.73885,precision=0.73418,accuracy=0.69373
+recall=0.79245,precision=0.80255,accuracy=0.76384
+recall=0.79605,precision=0.72024,accuracy=0.71218
+recall=0.73203,precision=0.73203,accuracy=0.69853
+recall=0.65972,precision=0.75397,accuracy=0.7048
 DONE

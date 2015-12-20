@@ -1,1 +1,7 @@
 title=male
+recall=0.99543,precision=1,accuracy=0.99726
+recall=0.99526,precision=0.98131,accuracy=0.9863
+recall=1,precision=1,accuracy=1
+recall=1,precision=1,accuracy=1
+recall=0.99468,precision=1,accuracy=0.99726
+DONE

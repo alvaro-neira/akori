@@ -62,10 +62,13 @@ function [  ] = SVMsTests( P, counters, totalSamples, title )
 %          SVMModel = lassoglm (X,Y,'binomial','Lambda',10) ;
 %         label=glmval(B,X,'logit') ;
 
-SVMModel=fitglm(X,Y,'Distribution','binomial'); %te entrega todo el modelo. Creo q Y puede ser {hombre, mujer}
+%Regression
+% SVMModel=fitglm(X,Y,'Distribution','binomial'); %te entrega todo el modelo. Creo q Y puede ser {hombre, mujer}
+% Ypredicted=predict(SVMModel,X);  %Luego es lo mismo
 
-Ypredicted=predict(SVMModel,X);  %Luego es lo mismo
-        
+%Tree
+SVMModel = fitctree(X,Y); % Y puede ser categ?rico, num?rico, etc
+
         %Testing
         Xtest=zeros(heightToSkip,nFeatures);
         testLength=heightToSkip;
